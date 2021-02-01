@@ -2,6 +2,7 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { MenuItem } from "./MenuItem";
 import { Link } from "react-router-dom";
+import { withAuth } from "./../../context/auth-context";
 import authService from "./../../lib/auth-service";
 
 const variants = {
@@ -34,7 +35,7 @@ const handleLogout = () => {
   authService.logout().then((response) => console.log(response));
 };
 
-export const Navigation = (props) => (
+const Navigation = (props) => (
   <motion.ul
     onClick={props.toggle}
     className={props.open ? "" : "nav-close"}
@@ -43,50 +44,115 @@ export const Navigation = (props) => (
     {/* {itemIds.map((i) => (
       <MenuItem i={i} key={i} />
     ))} */}
-    <motion.li
-      variants={variantsLinks}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <Link to="/">Home</Link>
-    </motion.li>
 
-    <motion.li
-      variants={variantsLinks}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <Link to="cart">Cart</Link>
-    </motion.li>
-    <motion.li
-      variants={variantsLinks}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <Link to="/private">Checkout</Link>
-    </motion.li>
-    <motion.li
-      variants={variantsLinks}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <p onClick={handleLogout}>Logout</p>
-    </motion.li>
-    <motion.li
-      variants={variantsLinks}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <Link to="/login">Login</Link>
-    </motion.li>
-    <motion.li
-      variants={variantsLinks}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <Link to="/profile">Profile</Link>
-    </motion.li>
+    {props.user === null ? (
+      <>
+        <motion.li
+          variants={variantsLinks}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Link className="nav-link" to={{ pathname: `/home/all` }}>
+            Home
+          </Link>
+        </motion.li>
+        <motion.li
+          variants={variantsLinks}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Link className="nav-link" to="/login">
+            Login
+          </Link>
+        </motion.li>
+        <motion.li
+          variants={variantsLinks}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Link className="nav-link" to="/signup">
+            Sign Up
+          </Link>
+        </motion.li>
+      </>
+    ) : (
+      <>
+        <motion.li
+          variants={variantsLinks}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Link className="nav-link" to={{ pathname: `/home/all` }}>
+            Home
+          </Link>
+        </motion.li>
+        <motion.li
+          variants={variantsLinks}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Link className="nav-link" to={{ pathname: `/home/men` }}>
+            Men
+          </Link>
+        </motion.li>
+        <motion.li
+          variants={variantsLinks}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Link className="nav-link" to={{ pathname: `/home/woman` }}>
+            Women
+          </Link>
+        </motion.li>
+        <motion.li
+          variants={variantsLinks}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Link to={{ pathname: `/home/fitness` }} className="nav-link">
+            Fitness
+          </Link>
+        </motion.li>
+        <motion.li
+          variants={variantsLinks}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Link className="nav-link" to="/cart">
+            Cart
+          </Link>
+        </motion.li>
+        <motion.li
+          variants={variantsLinks}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Link className="nav-link" to="/private">
+            Checkout
+          </Link>
+        </motion.li>
+        <motion.li
+          variants={variantsLinks}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <p onClick={handleLogout}>Logout</p>
+        </motion.li>
+
+        <motion.li
+          variants={variantsLinks}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Link className="nav-link" to="/profile">
+            Profile
+          </Link>
+        </motion.li>
+      </>
+    )}
   </motion.ul>
 );
 
 const itemIds = [0, 1, 2, 3, 4];
+
+export default withAuth(Navigation);

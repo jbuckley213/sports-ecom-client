@@ -19,6 +19,7 @@ export const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
 
   &:hover {
     box-shadow: 0px 37px 20px -20px rgba(0, 0, 0, 0.2);

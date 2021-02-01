@@ -6,6 +6,9 @@ import { loadStripe } from "@stripe/stripe-js";
 import paymentService from "./../lib/payment-service";
 import { withAuth } from "./../context/auth-context";
 import productService from "../lib/product-service";
+import { motion } from "framer-motion";
+import EnterDetails from "./../components/EnterDetails";
+import { CheckoutContainer, ProgressBar, Info } from "./../styles/checkout";
 
 const stripePromise = loadStripe(
   "pk_test_51IBgegFmgEKSMttvbJS0troDCWkHcpkFlS9n6kFzNvWyoKkSekYs45Ty53Sy6YbDerQNXvCCYpXrVMOQR7GcYpl0001rk9IfxI"
@@ -50,23 +53,45 @@ function Private(props) {
       console.log(data);
     });
   };
+  const containerVariant = {
+    hidden: {
+      opacity: 0,
+      x: "100vw",
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.5 },
+    },
+    exit: {
+      x: "-100vw",
+      transition: { ease: "easeInOut", duration: 0.5 },
+    },
+  };
 
   return (
-    <React.Fragment>
-      <div>
-        <h1>Private Route</h1>
+    <motion.div
+      variants={containerVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
+      <CheckoutContainer>
+        <ProgressBar>
+          <Info>Your Details</Info>
+        </ProgressBar>
+        <EnterDetails />
+
         <h2>Welcome {props.user && props.user.username}</h2>
 
         <p style={{ float: "right" }} onClick={makePayment}>
           Buy Now
         </p>
-
-        <Link to="/stripe">Stripe Payment</Link>
-      </div>
+      </CheckoutContainer>
       <div>{message}</div>
 
       <button onClick={handleCart}>Change cart</button>
-    </React.Fragment>
+    </motion.div>
   );
 }
 

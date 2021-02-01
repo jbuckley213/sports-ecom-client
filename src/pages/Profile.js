@@ -3,6 +3,7 @@ import productService from "./../lib/product-service";
 import ProductCart from "./../components/ProductCart/ProductCart";
 import { withAuth } from "./../context/auth-context";
 import ProductHistoryItem from "./../components/ProductHistoryItem/ProductHistoryItem";
+import { motion } from "framer-motion";
 
 function Profile(props) {
   const [previousCart, setPreviousCart] = useState([]);
@@ -35,9 +36,29 @@ function Profile(props) {
       return number;
     }
   };
+  const containerVariant = {
+    hidden: {
+      opacity: 0,
+      x: "-100vw",
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.5 },
+    },
+    exit: {
+      x: "100vw",
+      transition: { ease: "easeInOut", duration: 0.5 },
+    },
+  };
 
   return (
-    <div>
+    <motion.div
+      variants={containerVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <h1>Purchase History</h1>
       {previousCart.map((item) => {
         return (
@@ -50,7 +71,7 @@ function Profile(props) {
           </div>
         );
       })}
-    </div>
+    </motion.div>
   );
 }
 

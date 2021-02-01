@@ -33,7 +33,7 @@ export const ReturnButton = styled.button`
   width: 20%;
   position: relative;
   top: 0;
-  right: 250px;
+  right: 40%;
   border-radius: 25px;
   background-color: blueviolet;
 `;

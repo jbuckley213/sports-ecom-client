@@ -32,7 +32,7 @@ function ProductCart(props) {
       exit={{ x: "-100vw" }}
       transition={{ type: "spring" }}
     >
-      <ProductCartLayout>
+      <ProductCartLayout width={props.width}>
         <div className="img-div">
           <img src={props.product.image} />
         </div>

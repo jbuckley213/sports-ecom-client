@@ -13,7 +13,7 @@ import { Button } from "./../styles/button";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { withRouter } from "react-router-dom";
 
-function Login(props) {
+function EnterDetails(props) {
   // state = { username: "", password: "" };
   const [inputs, setInputs] = useState({ username: "", password: "" });
 
@@ -56,22 +56,6 @@ function Login(props) {
     },
   };
 
-  // const containerVariant = {
-  //   hidden: {
-  //     opacity: 0,
-  //     x: "-100vw",
-  //   },
-  //   visible: {
-  //     opacity: 1,
-  //     x: 0,
-  //     transition: { duration: 0.5 },
-  //   },
-  //   exit: {
-  //     x: "100vw",
-  //     transition: { ease: "easeInOut", duration: 0.5 },
-  //   },
-  // };
-
   const variant = {
     hidden: {
       x: "-100vw",
@@ -108,7 +92,7 @@ function Login(props) {
         <motion.div variants={variant} animate="visible" inital="hidden">
           <TextField
             id="outlined-basic"
-            label="Username"
+            label="Name"
             type="text"
             name="username"
             value={username}
@@ -120,8 +104,8 @@ function Login(props) {
         <motion.div variants={variant} animate="visible" inital="hidden">
           <TextField
             id="outlined-basic"
-            label="Password"
-            type="password"
+            label="Email"
+            type="text"
             name="password"
             value={password}
             onChange={handleChange}
@@ -129,10 +113,59 @@ function Login(props) {
           />
         </motion.div>
 
+        <TextField
+          id="outlined-basic"
+          label="Building"
+          type="text"
+          name="password"
+          value={password}
+          onChange={handleChange}
+          placeholder="Password"
+        />
+
+        <TextField
+          id="outlined-basic"
+          label="Street"
+          type="text"
+          name="password"
+          value={password}
+          onChange={handleChange}
+          placeholder="Password"
+        />
+
+        <TextField
+          id="outlined-basic"
+          label="City"
+          type="text"
+          name="password"
+          value={password}
+          onChange={handleChange}
+          placeholder="Password"
+        />
+
+        <TextField
+          id="outlined-basic"
+          label="Postcode"
+          type="text"
+          name="password"
+          value={password}
+          onChange={handleChange}
+          placeholder="Password"
+        />
+
+        <TextField
+          id="outlined-basic"
+          label="Country"
+          type="text"
+          name="password"
+          value={password}
+          onChange={handleChange}
+          placeholder="Password"
+        />
         <Button type="submit">Login</Button>
       </form>
     </motion.div>
   );
 }
 
-export default withRouter(withAuth(Login));
+export default withRouter(withAuth(EnterDetails));

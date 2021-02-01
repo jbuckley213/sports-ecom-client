@@ -1,53 +1,103 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "./../context/auth-context";
+import { motion } from "framer-motion";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import { Button } from "./../styles/button";
+import { withRouter } from "react-router-dom";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
-class Signup extends Component {
-  state = { username: "", password: "" };
+function Signup(props) {
+  // state = { username: "", password: "" }
 
-  handleFormSubmit = (event) => {
+  const [inputs, setInputs] = useState({ username: "", password: "" });
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      "& > *": {
+        margin: theme.spacing(1),
+        width: "25ch",
+      },
+    },
+  }));
+
+  const handleFormSubmit = (event) => {
     event.preventDefault();
-    const { username, password } = this.state;
+    const { username, password } = inputs;
 
-    this.props.signup(username, password);
+    props.signup(username, password);
   };
 
-  handleChange = (event) => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    setInputs({ ...inputs, [name]: value });
   };
 
-  render() {
-    const { username, password } = this.state;
-    return (
-      <div>
-        <h1>Sign Up</h1>
+  const containerVariant = {
+    hidden: {
+      opacity: 0,
+      x: "-100vw",
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.5 },
+    },
+    exit: {
+      x: "+100vw",
+      transition: { ease: "easeInOut", duration: 0.5 },
+    },
+  };
 
-        <form onSubmit={this.handleFormSubmit}>
-          <label>Username:</label>
-          <input
-            type="text"
-            name="username"
-            value={username}
-            onChange={this.handleChange}
-          />
+  const { username, password } = inputs;
+  const classes = useStyles();
 
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={this.handleChange}
-          />
+  return (
+    <motion.div
+      className="signup"
+      variants={containerVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
+      <ArrowBackIcon onClick={() => props.history.goBack()} />
 
-          <input type="submit" value="Signup" />
-        </form>
+      <h1>Sign Up</h1>
 
-        <p>Already have account?</p>
-        <Link to={"/login"}> Login</Link>
-      </div>
-    );
-  }
+      <form
+        className={classes.root}
+        noValidate
+        autoComplete="off"
+        onSubmit={handleFormSubmit}
+      >
+        <TextField
+          id="outlined-basic"
+          label="Username"
+          type="text"
+          // variant="outlined"
+          name="username"
+          value={username}
+          onChange={handleChange}
+        />
+
+        <TextField
+          id="outlined-basic"
+          label="Password"
+          // variant="outlined"
+          type="password"
+          name="password"
+          value={password}
+          onChange={handleChange}
+        />
+
+        <Button type="submit">Sign Up</Button>
+      </form>
+
+      <p>Already have account?</p>
+      <Link to={"/login"}> Login</Link>
+    </motion.div>
+  );
 }
 
-export default withAuth(Signup);
+export default withRouter(withAuth(Signup));

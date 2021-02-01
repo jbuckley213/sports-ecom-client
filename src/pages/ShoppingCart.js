@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import ProductCart from "./../components/ProductCart/ProductCart";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { motion } from "framer-motion";
 
 function ShoppingCart(props) {
   let total = 10;
@@ -22,8 +23,29 @@ function ShoppingCart(props) {
     }
   };
 
+  const containerVariant = {
+    hidden: {
+      opacity: 0,
+      x: "100vw",
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.5 },
+    },
+    exit: {
+      x: "-100vw",
+      transition: { ease: "easeInOut", duration: 0.5 },
+    },
+  };
+
   return (
-    <div>
+    <motion.div
+      variants={containerVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <h1>ShoppingCart</h1>
 
       {props.cart.map((product) => {
@@ -31,6 +53,7 @@ function ShoppingCart(props) {
         return (
           <div key={product._id}>
             <ProductCart
+              width={"30%"}
               handleNumberDecimal={handleNumberDecimal}
               product={product}
             />
@@ -52,7 +75,7 @@ function ShoppingCart(props) {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
 

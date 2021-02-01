@@ -55,6 +55,13 @@ class ProductService {
 
     return pr;
   }
+
+  getProduct(id) {
+    const pr = this.product
+      .get(`/product-details/${id}`)
+      .then(({ data }) => data);
+    return pr;
+  }
 }
 
 const productService = new ProductService();
