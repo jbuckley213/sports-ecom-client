@@ -4,6 +4,7 @@ import ProductCart from "./../components/ProductCart/ProductCart";
 import { withAuth } from "./../context/auth-context";
 import ProductHistoryItem from "./../components/ProductHistoryItem/ProductHistoryItem";
 import { motion } from "framer-motion";
+import Axios from "axios";
 
 function Profile(props) {
   const [previousCart, setPreviousCart] = useState([]);
@@ -16,7 +17,16 @@ function Profile(props) {
     productService
       .previousCarts()
       .then((data) => {
+        console.log(data);
         setPreviousCart(data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const testEmail = () => {
+    Axios.get("http://localhost:5000/payment/test")
+      .then((response) => {
+        console.log(response);
       })
       .catch((err) => console.log(err));
   };
@@ -60,17 +70,26 @@ function Profile(props) {
       exit="exit"
     >
       <h1>Purchase History</h1>
-      {previousCart.map((item) => {
-        return (
-          <div key={item.product._id}>
-            <ProductHistoryItem
-              handleNumberDecimal={handleNumberDecimal}
-              product={item.product}
-              quantity={item.quantity}
-            />
-          </div>
-        );
-      })}
+      {previousCart[0] &&
+        previousCart.map((items) => {
+          console.log("items", items);
+          return (
+            <div key={items._id}>
+              <p>{items.created_at}</p>
+              {items.items.map((item) => {
+                return (
+                  <ProductHistoryItem
+                    handleNumberDecimal={handleNumberDecimal}
+                    product={item.product}
+                    quantity={item.quantity}
+                  />
+                );
+              })}
+            </div>
+          );
+        })}
+
+      <button onClick={testEmail}>Test Email</button>
     </motion.div>
   );
 }

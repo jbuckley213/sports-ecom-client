@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { connect } from "react-redux";
 import ProductCart from "./../ProductCart/ProductCart";
 import { Button } from "./../../styles/button";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import { ShopButton } from "./../../styles/landing";
 // import SideProductCard from "./../SideProductCard/SideProductCard";
 
 const handleNumberDecimal = (number) => {
@@ -22,9 +23,17 @@ const handleNumberDecimal = (number) => {
     return number;
   }
 };
-let total = 10;
 
 function SideCart(props) {
+  const handleRedirect = () => {
+    setTimeout(function () {
+      props.toggleCart();
+    }, 1000);
+    props.history.push("/private");
+  };
+
+  let total = 10;
+
   return (
     <motion.div
       className="cart-slide"
@@ -49,7 +58,7 @@ function SideCart(props) {
           );
         })}
         {props.cart.length === 0 ? (
-          <p>There are no items in your cart</p>
+          <p className="no-cart-items">There are no items in your cart</p>
         ) : (
           <div className="totals">
             <div>
@@ -61,11 +70,7 @@ function SideCart(props) {
             <div className="final-total">
               <h5>Total:</h5> <p>&euro;{handleNumberDecimal(total)}</p>
             </div>
-            <Button>
-              <Link to="/private" className="button-link">
-                Checkout{" "}
-              </Link>
-            </Button>
+            <ShopButton onClick={handleRedirect}>Checkout </ShopButton>
           </div>
         )}
       </CartContainer>
@@ -79,4 +84,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(SideCart);
+export default connect(mapStateToProps)(withRouter(SideCart));

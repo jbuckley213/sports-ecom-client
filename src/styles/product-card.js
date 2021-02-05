@@ -23,7 +23,7 @@ export const ProductCardLayout = styled.div`
       width:100%;
       height:auto;
       margin:0 auto;
-    
+
         
          ${
            "" /* box-shadow:
@@ -75,6 +75,7 @@ export const ProductDetailsLayout = styled.div`
     border-radius:5px;  */}
     overflow:auto;
     img{
+
         width:70%;
         margin:0 15%;
         box-shadow:

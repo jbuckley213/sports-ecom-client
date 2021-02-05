@@ -52,7 +52,7 @@ const Navigation = (props) => (
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
-          <Link className="nav-link" to={{ pathname: `/home/all` }}>
+          <Link className="nav-link" to={{ pathname: `/` }}>
             Home
           </Link>
         </motion.li>
@@ -82,7 +82,7 @@ const Navigation = (props) => (
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
-          <Link className="nav-link" to={{ pathname: `/home/all` }}>
+          <Link className="nav-link" to={{ pathname: `/` }}>
             Home
           </Link>
         </motion.li>

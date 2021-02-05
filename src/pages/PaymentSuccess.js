@@ -1,10 +1,80 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import productService from "./../lib/product-service";
+import { ProgressBar, ProgressItem } from "./../styles/checkout";
+import { motion } from "framer-motion";
 
 function PaymentSuccess(props) {
+  const [message, setMessage] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    // Check to see if this is a redirect back from Checkout
+    getSuccessMessage();
+    handleCart();
+  }, []);
+
+  const getSuccessMessage = () => {
+    const query = new URLSearchParams(window.location.search);
+    if (query.get("success")) {
+      setMessage("Order placed! You will receive an email confirmation.");
+      setSuccess(true);
+    }
+    if (query.get("canceled")) {
+      setMessage(
+        "Order canceled -- continue to shop around and checkout when you're ready."
+      );
+      setSuccess(false);
+    }
+  };
+
+  const containerVariant = {
+    hidden: {
+      opacity: 0,
+      x: "100vw",
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.5 },
+    },
+    exit: {
+      x: "-100vw",
+      transition: { ease: "easeInOut", duration: 0.5 },
+    },
+  };
+
+  // delete redux store
+  const handleCart = () => {
+    productService.changeCart().then((data) => {
+      console.log(data);
+    });
+  };
   return (
-    <div>
-      <h1>Success</h1>
-    </div>
+    <motion.div
+      variants={containerVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
+      {success && (
+        <React.Fragment>
+          <ProgressBar>
+            <ProgressItem color="228, 103, 46" background="255, 255, 255">
+              Your Details
+            </ProgressItem>
+            <ProgressItem color="228, 103, 46" background="255, 255, 255">
+              Review
+            </ProgressItem>
+            <ProgressItem color="255, 255, 255" background="228, 103, 46">
+              Success
+            </ProgressItem>
+          </ProgressBar>
+          <h1>Thank You For Your Order</h1>
+        </React.Fragment>
+      )}
+
+      <p>{message}</p>
+    </motion.div>
   );
 }
 

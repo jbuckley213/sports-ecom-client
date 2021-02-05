@@ -17,6 +17,7 @@ import SideCart from "./components/SideCart/SideCart";
 import Landing from "./pages/Landing";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+import Review from "./pages/Review";
 
 import AnonRoute from "./components/AnonRoute";
 import PrivateRoute from "./components/PrivateRoute";
@@ -44,7 +45,7 @@ function App(props) {
   return (
     <div>
       <SideNavbar />
-      <AnimatePresence>
+      <AnimatePresence exitBeforeEnter>
         {showCart && <SideCart toggleCart={toggleCart} />}
       </AnimatePresence>
       {/* exitBeforeEnter */}
@@ -55,7 +56,7 @@ function App(props) {
         <AnimatePresence exitBeforeEnter>
           <Switch location={location} key={location.key}>
             <Route exact path="/home/:search" component={Home} />
-            <Route exact path="/landing" component={Landing} />
+            <Route exact path="/" component={Landing} />
             <Route
               exact
               path="/details/:detailsId"
@@ -79,9 +80,14 @@ function App(props) {
             </Route>
 
             <PrivateRoute exact path="/stripe" component={Stripe} />
-            <PrivateRoute exact path="/success" component={PaymentSuccess} />
+            <Route exact path="/success">
+              {props.isLoggedIn ? <PaymentSuccess /> : <Login />}
+            </Route>
             <Route exact path="/cart">
               {props.isLoggedIn ? <ShoppingCart /> : <Login />}
+            </Route>
+            <Route exact path="/review">
+              {props.isLoggedIn ? <Review /> : <Login />}
             </Route>
           </Switch>
         </AnimatePresence>

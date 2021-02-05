@@ -22,6 +22,9 @@ function ProductCart(props) {
   };
 
   const handleDecrease = (product) => {
+    if (product.quantity === 1) {
+      return;
+    }
     props.decreaseQuantity(product);
   };
   return (

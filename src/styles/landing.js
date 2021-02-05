@@ -44,6 +44,11 @@ export const ImageHeaderContainer = styled.div`
   height: 70vh;
   margin-bottom: 10px;
   background: url(${(props) => props.image});
+  /* background: linear-gradient(
+      rgba(${(props) => props.color}, 0.5),
+      rgba(${(props) => props.color}, 0.5)
+    ),
+    url(${(props) => props.image}); */
   background-size: cover;
   background-position: center;
   @media (min-width: 1023px) {
@@ -80,4 +85,26 @@ export const Title = styled.p`
   text-transform: uppercase;
   letter-spacing: 8px;
   text-align: center;
+`;
+
+export const ShopButton = styled.button`
+  border-radius: 50px;
+  width: 200px;
+  height: 60px;
+  color: white;
+  margin: 20px;
+  font-size: 0.6rem;
+  background-color: rgb(228, 103, 46);
+  padding: 20px;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 1px;
+  padding: 10px 5px;
+  text-transform: uppercase;
+  border: none;
+  box-shadow: 0px 17px 10px -10px rgba(0, 0, 0, 0.4);
+  transition: all ease-in-out 300ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 `;

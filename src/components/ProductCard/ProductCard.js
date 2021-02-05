@@ -3,6 +3,7 @@ import { ProductCardLayout } from "./../../styles/product-card";
 
 function ProductCard(props) {
   const product = props.product;
+  console.log(props);
   return (
     <ProductCardLayout onClick={() => props.eventClick(product)}>
       <img src={product.image} alt="product" />

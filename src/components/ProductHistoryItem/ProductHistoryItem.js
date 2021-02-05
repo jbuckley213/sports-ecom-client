@@ -6,14 +6,15 @@ import {
 } from "./../../styles/product-history";
 
 function ProductHistoryItem(props) {
+  console.log("props", props);
   return (
     <Container>
       <ImageContainer>
         <img src={props.product.image} />
       </ImageContainer>
       <TextContainer>
-        <p>{props.product.name}</p>
-        <p>{props.quantity}</p>
+        <h5>{props.product.name}</h5>
+        <p>Quantity: {props.quantity}</p>
       </TextContainer>
     </Container>
   );

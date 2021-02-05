@@ -8,7 +8,12 @@ import { withAuth } from "./../context/auth-context";
 import productService from "../lib/product-service";
 import { motion } from "framer-motion";
 import EnterDetails from "./../components/EnterDetails";
-import { CheckoutContainer, ProgressBar, Info } from "./../styles/checkout";
+import {
+  CheckoutContainer,
+  ProgressBar,
+  Info,
+  ProgressItem,
+} from "./../styles/checkout";
 
 const stripePromise = loadStripe(
   "pk_test_51IBgegFmgEKSMttvbJS0troDCWkHcpkFlS9n6kFzNvWyoKkSekYs45Ty53Sy6YbDerQNXvCCYpXrVMOQR7GcYpl0001rk9IfxI"
@@ -78,8 +83,17 @@ function Private(props) {
     >
       <CheckoutContainer>
         <ProgressBar>
-          <Info>Your Details</Info>
+          <ProgressItem color="255, 255, 255" background="228, 103, 46">
+            Your Details
+          </ProgressItem>
+          <ProgressItem color="228, 103, 46" background="255, 255, 255">
+            Review
+          </ProgressItem>
+          <ProgressItem color="228, 103, 46" background="255, 255, 255">
+            Success
+          </ProgressItem>
         </ProgressBar>
+
         <EnterDetails />
 
         <h2>Welcome {props.user && props.user.username}</h2>

@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 
 export const Container = styled.div`
+  margin: 10px 0;
   display: flex;
   justify-content: space-around;
   &:hover {
@@ -12,9 +13,13 @@ export const Container = styled.div`
 export const ImageContainer = styled.div`
   ${() =>
     css`
-    width:50%;
+    width:120px;
+
+    @media (min-width:1023px){
+      width:30%;
+    }
 img{
-  width: 30%;
+  width: 100%;
   height: auto;
 `};
 `;
@@ -22,8 +27,13 @@ img{
 export const TextContainer = styled.div`
   ${() =>
     css`
-    width:50%;
+    width:120px;
+    @media (min-width:1023px){
+      width:40%;
+    }
+   
 p{
+  color:grey;
   width: 100%;
   height: auto;
 `};
