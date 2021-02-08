@@ -83,3 +83,5 @@ export const PayNow = styled.div`
   margin: 0 auto;
   width: 100px;
 `;
+
+export const inputContainers = styled.div``;

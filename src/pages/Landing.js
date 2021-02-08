@@ -13,6 +13,7 @@ import {
   Divider,
   Info,
   ShopButton,
+  ImageProductContainer,
 } from "./../styles/landing";
 
 function Landing() {
@@ -86,43 +87,41 @@ function Landing() {
           </div>
         </ImageHeaderContainer>
       </Header>{" "}
+      <Info>Keep Active, Stay Healthy</Info>
+      <LandingContainer>
+        {products[0] && (
+          <ImageProductContainer color="226, 169, 146">
+            <img src={products[0].image} />{" "}
+            <p>&euro;{handleNumberDecimal(products[0].price)}</p>
+          </ImageProductContainer>
+        )}
+
+        {products[0] && (
+          <ImageProductContainer color="176, 227, 232">
+            <img src={products[1].image} />{" "}
+            <p>&euro;{handleNumberDecimal(products[1].price)}</p>
+          </ImageProductContainer>
+        )}
+        {products[0] && (
+          <ImageProductContainer color="190, 216, 165">
+            <img src={products[2].image} />{" "}
+            <p>&euro;{handleNumberDecimal(products[2].price)}</p>
+          </ImageProductContainer>
+        )}
+      </LandingContainer>
       <LandingContainer>
         <ImageContainer image="/swimmer.jpg" color="139, 168, 226">
           <Title>Best Prices</Title>
         </ImageContainer>
-        {/* {products[0] && (
-          <ProductCard
-            product={products[0]}
-            numberToCurrency={handleNumberDecimal}
-          />
-        )} */}
-        {products[0] && (
-          <ImageContainer image={products[0].image} color="176, 227, 232">
-            <Title>&euro;{handleNumberDecimal(products[0].price)}</Title>
-          </ImageContainer>
-        )}
 
         <ImageContainer image="/men.jpg" color="226, 169, 146">
           <Title>For Men</Title>
         </ImageContainer>
-        {products[0] && (
-          <ImageContainer image={products[1].image} color="176, 227, 232">
-            <Title>&euro;{handleNumberDecimal(products[1].price)}</Title>
-          </ImageContainer>
-        )}
-        {products[0] && (
-          <ImageContainer image={products[2].image} color="176, 227, 232">
-            <Title>&euro;{handleNumberDecimal(products[2].price)}</Title>
-          </ImageContainer>
-        )}
-        <ImageContainer image="/handstand.jpg" color="226, 169, 146">
+
+        <ImageContainer image="/handstand.jpg" color="176, 227, 232">
           <Title>For Women</Title>
         </ImageContainer>
-        {products[0] && (
-          <ImageContainer image={products[3].image} color="176, 227, 232">
-            <Title>&euro;{handleNumberDecimal(products[3].price)}</Title>
-          </ImageContainer>
-        )}
+
         <ImageContainer image="/fitness.jpg" color="190, 216, 165">
           <Title>For Fitness</Title>
         </ImageContainer>

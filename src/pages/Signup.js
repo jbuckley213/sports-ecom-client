@@ -11,7 +11,8 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 function Signup(props) {
   // state = { username: "", password: "" }
 
-  const [inputs, setInputs] = useState({ username: "", password: "" });
+  const [inputs, setInputs] = useState({ email: "", password: "" });
+  const [error, setError] = useState(false);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,11 +23,34 @@ function Signup(props) {
     },
   }));
 
+  const formValidation = () => {
+    const values = Object.values(inputs);
+    let valid = false;
+    values.forEach((value) => {
+      if (value === "") {
+        valid = true;
+      }
+    });
+    return valid;
+  };
+
+  const inputValidation = (value) => {
+    if (value === "") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const handleSubmitValidation = () => {
+    console.log("called");
+    setError(formValidation());
+  };
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    const { username, password } = inputs;
+    const { email, password } = inputs;
 
-    props.signup(username, password);
+    props.signup(email, password);
   };
 
   const handleChange = (event) => {
@@ -42,7 +66,7 @@ function Signup(props) {
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.5 },
+      transition: { type: "spring", stiffness: 90, duration: 0.5 },
     },
     exit: {
       x: "+100vw",
@@ -50,7 +74,7 @@ function Signup(props) {
     },
   };
 
-  const { username, password } = inputs;
+  const { email, password } = inputs;
   const classes = useStyles();
 
   return (
@@ -73,12 +97,13 @@ function Signup(props) {
       >
         <TextField
           id="outlined-basic"
-          label="Username"
+          label="Email"
           type="text"
           // variant="outlined"
-          name="username"
-          value={username}
+          name="email"
+          value={email}
           onChange={handleChange}
+          error={error & inputValidation(email)}
         />
 
         <TextField
@@ -89,10 +114,15 @@ function Signup(props) {
           name="password"
           value={password}
           onChange={handleChange}
+          error={error & inputValidation(password)}
         />
 
-        <Button type="submit">Sign Up</Button>
+        <Button disabled={formValidation()} type="submit">
+          {" "}
+          <div onClick={handleSubmitValidation}>Sign Up</div>
+        </Button>
       </form>
+      {props.signupFailed && <p>Email is already taken</p>}
 
       <p>Already have account?</p>
       <Link to={"/login"}> Login</Link>

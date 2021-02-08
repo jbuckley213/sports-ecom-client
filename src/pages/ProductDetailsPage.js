@@ -161,9 +161,19 @@ function ProductDetailsPage(props) {
           <p>{product.description}</p>
           <Actions>
             <Price>
-              &euro;
-              {product.price &&
-                handleNumberDecimal(totalQuantity(product.price))}
+              {product.sale && (
+                <h5>
+                  {" "}
+                  &euro;
+                  {handleNumberDecimal(totalQuantity(product.oldPrice))}
+                </h5>
+              )}
+              <h4>
+                {" "}
+                &euro;
+                {product.price &&
+                  handleNumberDecimal(totalQuantity(product.price))}
+              </h4>
             </Price>
             <AddToCart>
               <Quantity

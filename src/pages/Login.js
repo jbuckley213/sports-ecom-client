@@ -15,13 +15,14 @@ import { withRouter } from "react-router-dom";
 
 function Login(props) {
   // state = { username: "", password: "" };
-  const [inputs, setInputs] = useState({ username: "", password: "" });
+  const [inputs, setInputs] = useState({ email: "", password: "" });
+  const [error, setError] = useState(false);
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    const { username, password } = inputs;
+    const { email, password } = inputs;
     // Call funciton coming from AuthProvider ( via withAuth )
-    props.login(username, password);
+    props.login(email, password);
   };
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,7 +40,13 @@ function Login(props) {
   const containerVariant = {
     visible: {
       x: 0,
-      transition: { duration: 0.5, staggerChildren: 0.07, delayChildren: 0.2 },
+      transition: {
+        duration: 0.5,
+        type: "spring",
+        stiffness: 90,
+        staggerChildren: 0.07,
+        delayChildren: 0.2,
+      },
     },
     hidden: {
       x: "-100vw",
@@ -56,21 +63,28 @@ function Login(props) {
     },
   };
 
-  // const containerVariant = {
-  //   hidden: {
-  //     opacity: 0,
-  //     x: "-100vw",
-  //   },
-  //   visible: {
-  //     opacity: 1,
-  //     x: 0,
-  //     transition: { duration: 0.5 },
-  //   },
-  //   exit: {
-  //     x: "100vw",
-  //     transition: { ease: "easeInOut", duration: 0.5 },
-  //   },
-  // };
+  const formValidation = () => {
+    const values = Object.values(inputs);
+    let valid = false;
+    values.forEach((value) => {
+      if (value === "") {
+        valid = true;
+      }
+    });
+    return valid;
+  };
+
+  const inputValidation = (value) => {
+    if (value === "") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const handleSubmitValidation = () => {
+    console.log("called");
+    setError(formValidation());
+  };
 
   const variant = {
     hidden: {
@@ -85,8 +99,8 @@ function Login(props) {
       transition: { ease: "easeInOut", duration: 0.5 },
     },
   };
-  const { username, password } = inputs;
-
+  const { email, password } = inputs;
+  console.log("props", props);
   const classes = useStyles();
   return (
     <motion.div
@@ -108,12 +122,12 @@ function Login(props) {
         <motion.div variants={variant} animate="visible" inital="hidden">
           <TextField
             id="outlined-basic"
-            label="Username"
+            label="Email"
             type="text"
-            name="username"
-            value={username}
+            name="email"
+            value={email}
             onChange={handleChange}
-            placeholder="Username"
+            error={error & inputValidation(email)}
           />
         </motion.div>
 
@@ -125,12 +139,15 @@ function Login(props) {
             name="password"
             value={password}
             onChange={handleChange}
-            placeholder="Password"
+            error={error & inputValidation(password)}
           />
         </motion.div>
 
-        <Button type="submit">Login</Button>
+        <Button disabled={formValidation()} type="submit">
+          <div onClick={handleSubmitValidation}>Login</div>
+        </Button>
       </form>
+      {props.loginFailed && <p>Incorrect password or Email</p>}
     </motion.div>
   );
 }

@@ -21,6 +21,12 @@ export const Button = styled.button`
   justify-content: center;
   text-decoration: none;
 
+  div {
+    margin: auto 0;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+
   &:hover {
     box-shadow: 0px 37px 20px -20px rgba(0, 0, 0, 0.2);
     transform: translate(0px, -10px) scale(1.1);

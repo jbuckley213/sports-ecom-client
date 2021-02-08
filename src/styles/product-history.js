@@ -38,3 +38,11 @@ p{
   height: auto;
 `};
 `;
+
+export const DateContainer = styled.div`
+  background: white;
+  width: 80%;
+  margin: 20px auto;
+  border-radius: 25px;
+  padding: 30px;
+`;

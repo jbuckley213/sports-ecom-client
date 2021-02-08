@@ -382,3 +382,33 @@ nav {
   margin: 25vh 0;
   text-align: center;
 }
+
+.details-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .form-container {
+    width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    @media (min-width: 1023px) {
+      width: 600px;
+    }
+    div {
+      width: 200px;
+    }
+  }
+}
+
+.inputs {
+  margin: 10px 0;
+}
+
+.img-test {
+  width: 100px;
+  height: 100px;
+  mix-blend-mode: multiply;
+}

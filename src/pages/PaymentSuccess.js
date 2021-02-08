@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import productService from "./../lib/product-service";
 import { ProgressBar, ProgressItem } from "./../styles/checkout";
 import { motion } from "framer-motion";
+import { connect } from "react-redux";
+import { emptyCart } from "./../actions/cartActions";
+import { SuccessContainer, MessageContainer } from "./../styles/success";
 
 function PaymentSuccess(props) {
   const [message, setMessage] = useState("");
@@ -10,7 +13,7 @@ function PaymentSuccess(props) {
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
     getSuccessMessage();
-    handleCart();
+    props.emptyCart();
   }, []);
 
   const getSuccessMessage = () => {
@@ -69,13 +72,25 @@ function PaymentSuccess(props) {
               Success
             </ProgressItem>
           </ProgressBar>
-          <h1>Thank You For Your Order</h1>
+          <SuccessContainer>
+            <h1 onClick={props.emptyCart}>Thank You For Your Order</h1>
+          </SuccessContainer>
         </React.Fragment>
       )}
 
-      <p>{message}</p>
+      <MessageContainer>
+        <p>{message}</p>
+      </MessageContainer>
     </motion.div>
   );
 }
 
-export default PaymentSuccess;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    emptyCart: () => {
+      dispatch(emptyCart());
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(PaymentSuccess);

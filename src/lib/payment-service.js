@@ -3,13 +3,15 @@ import axios from "axios";
 class PaymentService {
   constructor() {
     this.payment = axios.create({
-      baseURL: "http://localhost:5000/payment",
+      //baseURL: "http://localhost:5000/payment",
+      baseURL: process.env.REACT_APP_API_URL,
+
       withCredentials: true,
     });
   }
 
   processPayment() {
-    const pr = this.payment.get("/").then(({ data }) => data);
+    const pr = this.payment.get("/payment").then(({ data }) => data);
 
     return pr;
   }
@@ -18,7 +20,7 @@ class PaymentService {
     console.log("called");
 
     const pr = this.payment
-      .post("/details", {
+      .post("/payment/details", {
         name,
         building,
         city,
@@ -33,7 +35,7 @@ class PaymentService {
   }
 
   getUser() {
-    const pr = this.payment.get("/review").then(({ data }) => data);
+    const pr = this.payment.get("/payment/review").then(({ data }) => data);
 
     return pr;
   }

@@ -108,3 +108,35 @@ export const ShopButton = styled.button`
   justify-content: center;
   text-decoration: none;
 `;
+
+export const ImageProductContainer = styled.div`
+  width: 350px;
+  height: 350px;
+  margin: 5px;
+  /* background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(${(props) => props.image}); */
+  background: linear-gradient(
+    rgba(${(props) => props.color}, 0.5),
+    rgba(${(props) => props.color}, 0.5)
+  );
+  background-size: cover;
+  background-position: center;
+  transition: all 0.5s;
+  &:hover {
+    box-shadow: 0px 37px 20px -20px rgba(0, 0, 0, 0.2);
+    transform: translate(0px, -10px) scale(1.1);
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: multiply;
+  }
+  p {
+    position: relative;
+    top: -50%;
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    text-align: center;
+    color: white;
+  }
+`;

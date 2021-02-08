@@ -9,6 +9,7 @@ export const ProductCardLayout = styled.div`
 
    margin:20px; 
    border-radius:10px;
+ 
    padding:10px;
    box-shadow:
                 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
@@ -36,17 +37,82 @@ export const ProductCardLayout = styled.div`
          }
         
   border-radius:5px;
+  mix-blend-mode: multiply;
+
  
     
+  }
+    .image-container{
+    ${
+      "" /* background: linear-gradient(
+    rgba(176, 227, 232, 0.5),
+    rgba(176, 227, 232, 0.5) */
+    }
+    height:230px;
+    background: linear-gradient(135deg, #ffffff 5%,   #5cbcb0 5%,  #5cbcb0 15%, #ffffff  15%);
+    p{
+      transform: rotate(320deg);
+      position: relative;
+      top:-278px;
+      right:19px;
+      text-decoration:none;
+    }
+  
+  border-radius:5px;
   }
   h3{
       margin:30px 0;
       font-size:1rem;
       width:90%;
   }
-  p {
+  .old-price {
     color: #444;
+    text-decoration: line-through;
+    margin:0 5px;
+
 `}
+`;
+
+export const TruePrice = styled.p`
+  color: #444;
+  text-decoration: none;
+`;
+
+export const PriceContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const ImageProductContainer = styled.div`
+  width: 350px;
+  height: 350px;
+  margin: 5px;
+  /* background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(${(props) => props.image}); */
+  background: linear-gradient(
+    rgba(${(props) => props.color}, 0.5),
+    rgba(${(props) => props.color}, 0.5)
+  );
+  background-size: cover;
+  background-position: center;
+  transition: all 0.5s;
+  &:hover {
+    box-shadow: 0px 37px 20px -20px rgba(0, 0, 0, 0.2);
+    transform: translate(0px, -10px) scale(1.1);
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: multiply;
+  }
+  p {
+    position: relative;
+    top: -50%;
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    text-align: center;
+    color: white;
+  }
 `;
 
 export const ProductCardGrid = styled.div`

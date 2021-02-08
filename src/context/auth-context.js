@@ -1,87 +1,125 @@
-import React from 'react';
-import authService from './../lib/auth-service';
+import React from "react";
+import authService from "./../lib/auth-service";
 
 const { Consumer, Provider } = React.createContext();
-
 
 class AuthProvider extends React.Component {
   state = {
     isLoggedIn: false,
     isLoading: true,
-    user: null
+    user: null,
+    signupFailed: false,
+    loginFailed: false,
+  };
+
+  componentDidMount() {
+    authService
+      .me()
+      .then((user) =>
+        this.setState({ isLoggedIn: true, user: user, isLoading: false })
+      )
+      .catch((err) =>
+        this.setState({ isLoggedIn: false, user: null, isLoading: false })
+      );
   }
 
-  componentDidMount () {
-    authService.me()
-     .then((user) => this.setState({ isLoggedIn: true, user: user, isLoading: false }))
-     .catch((err) => this.setState({ isLoggedIn: false, user: null, isLoading: false }));
-  }
-
-  signup = (username, password) => {
-    authService.signup( username, password )
-      .then((user) => this.setState({ isLoggedIn: true, user }) )
+  signup = (email, password) => {
+    authService
+      .signup(email, password)
+      .then((user) =>
+        this.setState({ isLoggedIn: true, user, signupFailed: false })
+      )
       .catch((err) => {
-        this.setState({ isLoggedIn: false, user: null });
-      })
-  }
+        console.log(err);
+        this.setState({ isLoggedIn: false, user: null, signupFailed: true });
+      });
+  };
 
-  login = (username, password) => {
-    authService.login( username, password )
-      .then((user) => this.setState({ isLoggedIn: true, user }))
+  login = (email, password) => {
+    authService
+      .login(email, password)
+      .then((user) =>
+        this.setState({ isLoggedIn: true, user, loginFailed: false })
+      )
       .catch((err) => {
-        this.setState({ isLoggedIn: false, user: null });
-      })
-  }
+        this.setState({ isLoggedIn: false, user: null, loginFailed: true });
+      });
+  };
 
   logout = () => {
-    authService.logout()
+    authService
+      .logout()
       .then(() => this.setState({ isLoggedIn: false, user: null }))
       .catch((err) => console.log(err));
-  }
-
+  };
 
   render() {
-    const { isLoggedIn, isLoading, user } = this.state;
+    const {
+      isLoggedIn,
+      isLoading,
+      user,
+      loginFailed,
+      signupFailed,
+    } = this.state;
     const { signup, login, logout } = this;
 
     if (isLoading) return <p>Loading</p>;
 
-    return(
-      <Provider value={{ isLoggedIn, isLoading, user, signup, login, logout }}  >
+    return (
+      <Provider
+        value={{
+          isLoggedIn,
+          isLoading,
+          user,
+          loginFailed,
+          signupFailed,
+          signup,
+          login,
+          logout,
+        }}
+      >
         {this.props.children}
       </Provider>
-    )
+    );
   }
-
 }
-
 
 // HOC that converts regular component into a Consumer
 const withAuth = (WrappedComponent) => {
-  
   return class extends React.Component {
     render() {
-      return(
+      return (
         <Consumer>
-          { (value) => {
-            const { isLoggedIn, isLoading, user, signup, login, logout } = value;
+          {(value) => {
+            const {
+              isLoggedIn,
+              isLoading,
+              user,
+              loginFailed,
+              signupFailed,
+              signup,
+              login,
+              logout,
+            } = value;
 
-            return (<WrappedComponent 
-                      {...this.props}
-                      isLoggedIn={isLoggedIn} 
-                      isLoading={isLoading} 
-                      user={user} 
-                      signup={signup} 
-                      login={login} 
-                      logout={logout}
-                    />)
-
-          } }
+            return (
+              <WrappedComponent
+                {...this.props}
+                isLoggedIn={isLoggedIn}
+                isLoading={isLoading}
+                user={user}
+                loginFailed={loginFailed}
+                signupFailed={signupFailed}
+                signup={signup}
+                login={login}
+                logout={logout}
+              />
+            );
+          }}
         </Consumer>
-        )
+      );
     }
-}
-}
+  };
+};
 
-
-export { AuthProvider, withAuth }
+export { AuthProvider, withAuth };

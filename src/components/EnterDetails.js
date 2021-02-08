@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withAuth } from "./../context/auth-context";
 import { motion } from "framer-motion";
 
@@ -21,9 +21,57 @@ function EnterDetails(props) {
     email: "",
   });
 
+  const handleSubmitValidation = () => {
+    console.log("called");
+    setError(formValidation());
+  };
+
+  const [error, setError] = useState(false);
+
+  const formValidation = () => {
+    const values = Object.values(inputs);
+    let valid = false;
+    values.forEach((value) => {
+      if (value === "") {
+        valid = true;
+      }
+    });
+    return valid;
+  };
+
+  useEffect(() => {
+    handleInputs();
+  }, []);
+
+  const handleInputs = () => {
+    console.log(props.user);
+    if (props.user.address) {
+      const address = props.user.address;
+
+      setInputs({
+        name: props.user.name,
+        building: address.building,
+        street: address.street,
+        city: address.city,
+        postcode: address.postcode,
+        country: address.country,
+        email: props.user.email,
+      });
+    }
+  };
+
+  const inputValidation = (value) => {
+    if (value === "") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
     const { name, email, building, city, street, postcode, country } = inputs;
+
     // Call funciton coming from AuthProvider ( via withAuth )
     paymentService
       .saveDetails(name, building, city, street, postcode, country, email)
@@ -51,7 +99,7 @@ function EnterDetails(props) {
       transition: { duration: 0.5, staggerChildren: 0.07, delayChildren: 0.2 },
     },
     hidden: {
-      x: "-100vw",
+      x: "100vw",
 
       transition: {
         duration: 0.5,
@@ -67,7 +115,7 @@ function EnterDetails(props) {
 
   const variant = {
     hidden: {
-      x: "-100vw",
+      x: "100vw",
     },
     visible: {
       x: 0,
@@ -93,7 +141,7 @@ function EnterDetails(props) {
   const classes = useStyles();
   return (
     <motion.div
-      className="signup"
+      className="details-form"
       variants={containerVariant}
       initial="hidden"
       animate="visible"
@@ -108,80 +156,94 @@ function EnterDetails(props) {
         autoComplete="off"
         onSubmit={handleFormSubmit}
       >
-        <motion.div variants={variant} animate="visible" inital="hidden">
-          <TextField
-            id="outlined-basic"
-            label="Name"
-            type="text"
-            name="name"
-            value={name}
-            onChange={handleChange}
-            placeholder="Username"
-          />
-        </motion.div>
+        <div className="form-container">
+          <div>
+            <motion.div variants={variant} animate="visible" inital="hidden">
+              <TextField
+                id="outlined-basic"
+                label="Name"
+                type="text"
+                name="name"
+                value={name}
+                onChange={handleChange}
+                placeholder="Username"
+                error={error && inputValidation(name)}
+              />
+            </motion.div>
 
-        <motion.div variants={variant} animate="visible" inital="hidden">
-          <TextField
-            id="outlined-basic"
-            label="Email"
-            type="text"
-            name="email"
-            value={email}
-            onChange={handleChange}
-            placeholder="Password"
-          />
-        </motion.div>
+            <motion.div variants={variant} animate="visible" inital="hidden">
+              <TextField
+                className="inputs"
+                id="outlined-basic"
+                label="Email"
+                type="text"
+                name="email"
+                value={email}
+                onChange={handleChange}
+                placeholder="Password"
+                error={error && inputValidation(email)}
+              />
+            </motion.div>
 
-        <TextField
-          id="outlined-basic"
-          label="Building"
-          type="text"
-          name="building"
-          value={building}
-          onChange={handleChange}
-          placeholder="Password"
-        />
+            <TextField
+              id="outlined-basic"
+              label="Country"
+              type="text"
+              name="country"
+              value={country}
+              onChange={handleChange}
+              placeholder="Password"
+              error={error && inputValidation(country)}
+            />
+          </div>
+          <div>
+            <TextField
+              id="outlined-basic"
+              label="Building"
+              type="text"
+              name="building"
+              value={building}
+              onChange={handleChange}
+              placeholder="Password"
+              error={error && inputValidation(building)}
+            />
+            <TextField
+              id="outlined-basic"
+              label="Street"
+              type="text"
+              name="street"
+              value={street}
+              onChange={handleChange}
+              placeholder="Password"
+              error={error && inputValidation(street)}
+            />
 
-        <TextField
-          id="outlined-basic"
-          label="Street"
-          type="text"
-          name="street"
-          value={street}
-          onChange={handleChange}
-          placeholder="Password"
-        />
+            <TextField
+              id="outlined-basic"
+              label="City"
+              type="text"
+              name="city"
+              value={city}
+              onChange={handleChange}
+              placeholder="Password"
+              error={error && inputValidation(city)}
+            />
 
-        <TextField
-          id="outlined-basic"
-          label="City"
-          type="text"
-          name="city"
-          value={city}
-          onChange={handleChange}
-          placeholder="Password"
-        />
-
-        <TextField
-          id="outlined-basic"
-          label="Postcode"
-          type="text"
-          name="postcode"
-          value={postcode}
-          onChange={handleChange}
-          placeholder="Password"
-        />
-
-        <TextField
-          id="outlined-basic"
-          label="Country"
-          type="text"
-          name="country"
-          value={country}
-          onChange={handleChange}
-          placeholder="Password"
-        />
-        <Button type="submit">Continue</Button>
+            <TextField
+              id="outlined-basic"
+              label="Postcode"
+              type="text"
+              name="postcode"
+              value={postcode}
+              onChange={handleChange}
+              placeholder="Password"
+              error={error && inputValidation(postcode)}
+            />
+          </div>
+          <Button disabled={formValidation()} type="submit">
+            <div onClick={handleSubmitValidation}>Continue</div>
+          </Button>
+        </div>
       </form>
     </motion.div>
   );

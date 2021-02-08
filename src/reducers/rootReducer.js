@@ -16,6 +16,14 @@ const initState = {
 const rootReducer = (state = initState, action) => {
   console.log("product type", action.type);
 
+  if (action.type === "EMPTY_CART") {
+    console.log("hey");
+    return {
+      ...state,
+      cart: [],
+    };
+  }
+
   if (action.type === "GET_CART") {
     return {
       ...state,

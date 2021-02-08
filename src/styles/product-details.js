@@ -51,8 +51,19 @@ export const Actions = styled.div`
   align-items: center;
 `;
 
-export const Price = styled.h4`
-  width: 200px;
+export const Price = styled.div`
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  h4 {
+    margin: 0 5px;
+  }
+  h5 {
+    text-decoration: line-through;
+    margin: 0 5px;
+  }
 `;
 
 export const AddToCart = styled.div`

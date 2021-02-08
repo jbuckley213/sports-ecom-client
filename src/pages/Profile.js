@@ -5,6 +5,7 @@ import { withAuth } from "./../context/auth-context";
 import ProductHistoryItem from "./../components/ProductHistoryItem/ProductHistoryItem";
 import { motion } from "framer-motion";
 import Axios from "axios";
+import { DateContainer } from "./../styles/product-history";
 
 function Profile(props) {
   const [previousCart, setPreviousCart] = useState([]);
@@ -29,6 +30,14 @@ function Profile(props) {
         console.log(response);
       })
       .catch((err) => console.log(err));
+  };
+
+  const outputDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.toDateString().split(" ").slice(0, 3).join(" ");
+
+    const time = date.toLocaleString().split(" ").reverse()[0].slice(0, 5);
+    return time + " " + day;
   };
 
   const handleNumberDecimal = (number) => {
@@ -74,8 +83,8 @@ function Profile(props) {
         previousCart.map((items) => {
           console.log("items", items);
           return (
-            <div key={items._id}>
-              <p>{items.created_at}</p>
+            <DateContainer key={items._id}>
+              <p>{outputDate(items.created_at)}</p>
               {items.items.map((item) => {
                 return (
                   <ProductHistoryItem
@@ -85,7 +94,7 @@ function Profile(props) {
                   />
                 );
               })}
-            </div>
+            </DateContainer>
           );
         })}
 

@@ -136,7 +136,7 @@ const Navigation = (props) => (
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
-          <p onClick={handleLogout}>Logout</p>
+          <p onClick={props.logout}>Logout</p>
         </motion.li>
 
         <motion.li

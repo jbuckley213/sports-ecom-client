@@ -102,3 +102,17 @@ export const getCart = () => {
       .catch((err) => console.log(err));
   };
 };
+
+export const emptyCart = () => {
+  console.log("HELLP");
+  productServices
+    .changeCart()
+    .then((productsFound) => {
+      console.log(productsFound);
+    })
+    .catch((err) => console.log(err));
+
+  return {
+    type: "EMPTY_CART",
+  };
+};
