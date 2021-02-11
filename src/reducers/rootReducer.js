@@ -1,20 +1,17 @@
 const initState = {
-  cart: [
-    {
-      _id: 1,
-      name: "CROSS-TRAINING ELASTIC TRAINING BAND 15 KG",
-      description:
-        "Our design teams developed this elastic band for your weight training, cross training, or physical preparation sessions.The Training Band not only builds muscle strength but also helps you stretch. It is a versatile accessory that will become an absolute must for your workouts.",
-      price: 7,
-      quantity: 1,
-      image:
-        "https://contents.mediadecathlon.com/p1248644/k$8cb09590be97dba0d22732b5c4c7f118/sq/Cross+Training+Elastic+Training+Band+15+kg.webp?f=1000x1000",
-    },
-  ],
+  cart: [],
 };
 
 const rootReducer = (state = initState, action) => {
   console.log("product type", action.type);
+
+  if (action.type === "CART_LOGOUT") {
+    console.log("CARTTTT");
+    return {
+      ...state,
+      cart: [],
+    };
+  }
 
   if (action.type === "EMPTY_CART") {
     console.log("hey");

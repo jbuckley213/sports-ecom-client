@@ -94,7 +94,8 @@ export const ShopButton = styled.button`
   color: white;
   margin: 20px;
   font-size: 0.6rem;
-  background-color: rgb(228, 103, 46);
+  /* background-color: rgb(228, 103, 46); */
+  background-color: rgb(226, 169, 146);
   padding: 20px;
   font-family: "Montserrat", sans-serif;
   letter-spacing: 1px;
@@ -126,10 +127,13 @@ export const ImageProductContainer = styled.div`
     box-shadow: 0px 37px 20px -20px rgba(0, 0, 0, 0.2);
     transform: translate(0px, -10px) scale(1.1);
   }
+  z-index: 4;
+
   img {
     width: 100%;
     height: 100%;
     mix-blend-mode: multiply;
+    z-index: 4;
   }
   p {
     position: relative;
@@ -139,4 +143,25 @@ export const ImageProductContainer = styled.div`
     text-align: center;
     color: white;
   }
+`;
+
+export const TestDiv = styled.div`
+  width: 330px;
+  height: 10px;
+  z-index: ${(props) => props.zIndex};
+  background: white;
+  position: relative;
+  top: ${(props) => props.top};
+  left: ${(props) => props.left};
+`;
+
+export const TestDivTwo = styled.div`
+  width: 10px;
+  height: 360px;
+  z-index: ${(props) => props.zIndex};
+  background: white;
+  position: relative;
+  top: ${(props) => props.top};
+  left: ${(props) => props.left};
+  margin: 0;
 `;

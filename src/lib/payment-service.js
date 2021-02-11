@@ -39,6 +39,12 @@ class PaymentService {
 
     return pr;
   }
+
+  sendMail() {
+    const pr = this.payment.get("/payment/test").then(({ data }) => data);
+
+    return pr;
+  }
 }
 
 const paymentService = new PaymentService();

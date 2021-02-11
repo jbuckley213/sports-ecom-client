@@ -13,7 +13,6 @@ function PaymentSuccess(props) {
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
     getSuccessMessage();
-    props.emptyCart();
   }, []);
 
   const getSuccessMessage = () => {
@@ -29,6 +28,12 @@ function PaymentSuccess(props) {
       setSuccess(false);
     }
   };
+
+  useEffect(() => {
+    if (success === true) {
+      props.emptyCart();
+    }
+  }, [success]);
 
   const containerVariant = {
     hidden: {
@@ -52,6 +57,7 @@ function PaymentSuccess(props) {
       console.log(data);
     });
   };
+
   return (
     <motion.div
       variants={containerVariant}
@@ -62,13 +68,13 @@ function PaymentSuccess(props) {
       {success && (
         <React.Fragment>
           <ProgressBar>
-            <ProgressItem color="228, 103, 46" background="255, 255, 255">
+            <ProgressItem color="139, 168, 226" background="255, 255, 255">
               Your Details
             </ProgressItem>
-            <ProgressItem color="228, 103, 46" background="255, 255, 255">
+            <ProgressItem color="139, 168, 226" background="255, 255, 255">
               Review
             </ProgressItem>
-            <ProgressItem color="255, 255, 255" background="228, 103, 46">
+            <ProgressItem color="255, 255, 255" background="139, 168, 226">
               Success
             </ProgressItem>
           </ProgressBar>

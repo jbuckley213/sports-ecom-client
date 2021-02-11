@@ -3,11 +3,6 @@ import styled, { css } from "styled-components";
 export const Container = styled.div`
   margin: 10px 0;
   display: flex;
-  justify-content: space-around;
-  &:hover {
-    box-shadow: 0px 37px 20px -20px rgba(0, 0, 0, 0.2);
-    transform: translate(0px, -10px) scale(1.1);
-  }
 `;
 
 export const ImageContainer = styled.div`
@@ -16,7 +11,7 @@ export const ImageContainer = styled.div`
     width:120px;
 
     @media (min-width:1023px){
-      width:30%;
+      width:100px;
     }
 img{
   width: 100%;
@@ -27,11 +22,18 @@ img{
 export const TextContainer = styled.div`
   ${() =>
     css`
-    width:120px;
+    width:200px;
+    
+    justify-content:space-around;
     @media (min-width:1023px){
-      width:40%;
+      width:400px;
+      display:flex;
+      justify-content:space-evenly;
+      margin:0 100px;
     }
-   
+   h5{
+     font-size:1.1rem;
+   }
 p{
   color:grey;
   width: 100%;

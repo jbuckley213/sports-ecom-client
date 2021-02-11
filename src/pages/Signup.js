@@ -88,6 +88,7 @@ function Signup(props) {
       <ArrowBackIcon onClick={() => props.history.goBack()} />
 
       <h1>Sign Up</h1>
+      {/* <p className="line-1 anim-typewriter">HELLO THERE, WELCOME</p> */}
 
       <form
         className={classes.root}

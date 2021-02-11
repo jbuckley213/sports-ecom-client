@@ -4,13 +4,13 @@ export const CheckoutContainer = styled.div``;
 
 export const ProgressBar = styled.div`
   width: 90%;
-  height: 30%;
+  height: 50px;
   background-color: white;
   /* border: 1px solid rgb(228, 103, 46); */
   display: flex;
   /* clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%); */
   border-radius: 25px;
-  margin: 10px auto;
+  margin: 50px auto;
   position: relative;
   top: 20px;
 `;
@@ -40,8 +40,11 @@ export const ReviewContainer = styled.div`
   background: white;
   width: 70%;
   margin: 50px auto;
-  border-radius: 20px;
-  padding: 20px 10px;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+  padding: 10px 10px;
 `;
 
 export const AddressContainer = styled.div`
@@ -50,8 +53,9 @@ export const AddressContainer = styled.div`
   background: white;
   margin: 10px 0;
 
-  h3 {
-    text-align: center;
+  h5 {
+    border-bottom: 1px dashed #444;
+    padding: 10px 0;
   }
 `;
 
@@ -61,16 +65,15 @@ export const DetailsContainer = styled.div`
   background: white;
   margin: 10px 0;
 
-  h3 {
-    text-align: center;
+  h5 {
+    border-bottom: 1px dashed #444;
+    padding: 10px 0;
   }
 `;
 
 export const AddressLine = styled.p`
   width: 80%;
-  margin: 0 auto;
-  text-align: center;
-  border-bottom: 1px solid #444;
+  margin: 0;
   padding: 2px 0;
 `;
 
@@ -80,8 +83,40 @@ export const Price = styled.div`
 `;
 
 export const PayNow = styled.div`
-  margin: 0 auto;
-  width: 100px;
+  margin: 30px auto;
+  width: 100%;
+  button {
+    margin: 0 auto;
+    width: 100%;
+    border-radius: 25px;
+    height: 40px;
+    background-color: white;
+    border: none;
+    color: rgb(100, 113, 215);
+  }
+  span {
+    font-family: "Archivo Black", sans-serif;
+    color: rgb(100, 113, 215);
+    font-size: 1.2rem;
+  }
 `;
 
 export const inputContainers = styled.div``;
+
+export const FormSideBar = styled.div`
+  @media (min-width: 1027px) {
+    width: 250px;
+    height: 400px;
+    background-color: rgb(176, 227, 232, 0.8);
+    position: relative;
+    left: ${(props) => props.left};
+  }
+  h1 {
+    color: #444;
+    @media (min-width: 1027px) {
+      color: white;
+      text-align: center;
+      margin: 40px 0;
+    }
+  }
+`;

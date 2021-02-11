@@ -39,6 +39,23 @@ class AuthService {
 
     return pr;
   }
+
+  googleLogin(googleData) {
+    console.log("called");
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    const body = {
+      token: googleData.tokenId,
+    };
+    const pr = this.auth
+      .post("/auth/api/v1/auth/google", body, {
+        headers: headers,
+      })
+      .then(({ data }) => data);
+
+    return pr;
+  }
 }
 
 const authService = new AuthService();

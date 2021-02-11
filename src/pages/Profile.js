@@ -6,6 +6,7 @@ import ProductHistoryItem from "./../components/ProductHistoryItem/ProductHistor
 import { motion } from "framer-motion";
 import Axios from "axios";
 import { DateContainer } from "./../styles/product-history";
+import paymentService from "../lib/payment-service";
 
 function Profile(props) {
   const [previousCart, setPreviousCart] = useState([]);
@@ -25,7 +26,8 @@ function Profile(props) {
   };
 
   const testEmail = () => {
-    Axios.get("http://localhost:5000/payment/test")
+    paymentService
+      .sendMail()
       .then((response) => {
         console.log(response);
       })

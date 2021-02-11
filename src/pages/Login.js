@@ -12,6 +12,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "./../styles/button";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { getCart } from "./../actions/cartActions";
+import GoogleLogin from "react-google-login";
+import authService from "../lib/auth-service";
+import { FormSideBar } from "./../styles/checkout";
+import { Opacity } from "@material-ui/icons";
 
 function Login(props) {
   // state = { username: "", password: "" };
@@ -22,6 +28,7 @@ function Login(props) {
     event.preventDefault();
     const { email, password } = inputs;
     // Call funciton coming from AuthProvider ( via withAuth )
+    props.getCart();
     props.login(email, password);
   };
   const useStyles = makeStyles((theme) => ({
@@ -86,6 +93,27 @@ function Login(props) {
     setError(formValidation());
   };
 
+  const handleLogin = async (googleData) => {
+    props.googleLogin(googleData);
+    // authService
+    //   .googleLogin(googleData)
+    //   .then((data) => {
+    //     console.log(data);
+    //   })
+    //   .catch((err) => console.log(err));
+
+    // const res = await fetch("http://localhost:5000/auth/api/v1/auth/google", {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     token: googleData.tokenId,
+    //   }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // const data = await res.json();
+  };
+
   const variant = {
     hidden: {
       x: "-100vw",
@@ -99,57 +127,86 @@ function Login(props) {
       transition: { ease: "easeInOut", duration: 0.5 },
     },
   };
+  const variantHone = {
+    hidden: {
+      opacity: 0,
+    },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.5, delay: 0.5 },
+    },
+  };
   const { email, password } = inputs;
-  console.log("props", props);
   const classes = useStyles();
   return (
     <motion.div
-      className="signup"
+      className="login"
       variants={containerVariant}
       initial="hidden"
       animate="visible"
       exit="exit"
     >
       <ArrowBackIcon onClick={() => props.history.goBack()} />
-      <h1>Login</h1>
+      {/* <h1>Login</h1> */}
+      <FormSideBar left="0">
+        <motion.h1 variants={variantHone}>Login</motion.h1>
+      </FormSideBar>
+      <div>
+        <form
+          className={classes.root}
+          noValidate
+          autoComplete="off"
+          onSubmit={handleFormSubmit}
+        >
+          <motion.div variants={variantHone}>
+            <TextField
+              id="outlined-basic"
+              label="Email"
+              type="text"
+              name="email"
+              value={email}
+              onChange={handleChange}
+              error={error & inputValidation(email)}
+            />
+          </motion.div>
 
-      <form
-        className={classes.root}
-        noValidate
-        autoComplete="off"
-        onSubmit={handleFormSubmit}
-      >
-        <motion.div variants={variant} animate="visible" inital="hidden">
-          <TextField
-            id="outlined-basic"
-            label="Email"
-            type="text"
-            name="email"
-            value={email}
-            onChange={handleChange}
-            error={error & inputValidation(email)}
-          />
-        </motion.div>
+          <motion.div variants={variantHone}>
+            <TextField
+              id="outlined-basic"
+              label="Password"
+              type="password"
+              name="password"
+              value={password}
+              onChange={handleChange}
+              error={error & inputValidation(password)}
+            />
+          </motion.div>
 
-        <motion.div variants={variant} animate="visible" inital="hidden">
-          <TextField
-            id="outlined-basic"
-            label="Password"
-            type="password"
-            name="password"
-            value={password}
-            onChange={handleChange}
-            error={error & inputValidation(password)}
-          />
-        </motion.div>
-
-        <Button disabled={formValidation()} type="submit">
-          <div onClick={handleSubmitValidation}>Login</div>
-        </Button>
-      </form>
-      {props.loginFailed && <p>Incorrect password or Email</p>}
+          <Button disabled={formValidation()} type="submit">
+            <div onClick={handleSubmitValidation}>Login</div>
+          </Button>
+        </form>
+        <GoogleLogin
+          className="google-login"
+          clientId="687427569890-43sl05f68lh2ncs56ce50uqnrg963o48.apps.googleusercontent.com"
+          buttonText="Log in with Google"
+          onSuccess={handleLogin}
+          onFailure={handleLogin}
+          cookiePolicy={"single_host_origin"}
+          theme="light"
+        />
+        {props.loginFailed && <p>Incorrect password or Email</p>}
+      </div>
     </motion.div>
   );
 }
 
-export default withRouter(withAuth(Login));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getCart: () => {
+      dispatch(getCart());
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(withRouter(withAuth(Login)));

@@ -38,6 +38,7 @@ function ProductCart(props) {
       <ProductCartLayout width={props.width}>
         <div className="img-div">
           <img src={props.product.image} />
+          <div className="background-div"></div>
         </div>
         <div className="cart-details">
           <DeleteIcon onClick={() => handleDelete(props.product._id)} />

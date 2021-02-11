@@ -1,9 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
 
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
 // Colors
 $green: #7ac142;
+$new-green: rgb(190, 216, 165);
 $white: #fff;
 
 // Misc
@@ -171,11 +172,18 @@ li {
 }
 
 ul {
-  padding: 25px;
-  position: absolute;
-  top: 100px;
   width: 230px;
   z-index: 2;
+  position: relative;
+  margin: 0 40px;
+  margin-bottom: -1rem;
+  @media (min-width: 1203px) {
+    position: absolute;
+    margin: 0;
+
+    top: 100px;
+    padding: 25px;
+  }
 }
 
 li {
@@ -238,7 +246,7 @@ nav {
   stroke-width: 2;
   stroke: $white;
   stroke-miterlimit: 10;
-  box-shadow: inset 0px 0px 0px $green;
+  box-shadow: inset 0px 0px 0px $new-green;
   animation: fill 0.4s ease-in-out 0.4s forwards,
     scale 0.3s ease-in-out 0.9s both;
 }
@@ -248,7 +256,7 @@ nav {
   stroke-dashoffset: 166;
   stroke-width: 2;
   stroke-miterlimit: 10;
-  stroke: $green;
+  stroke: $new-green;
   fill: none;
   animation: stroke 0.6s $curve forwards;
 }
@@ -278,7 +286,7 @@ nav {
 
 @keyframes fill {
   100% {
-    box-shadow: inset 0px 0px 0px 30px $green;
+    box-shadow: inset 0px 0px 0px 30px $new-green;
   }
 }
 
@@ -292,13 +300,13 @@ nav {
   border-radius: 0 0 0 50%;
 }
 
-.login {
-  position: fixed;
-  top: 200px;
-  animation: log 1s;
-  background-color: white;
-  padding: 50px;
-}
+// .login {
+//   position: fixed;
+//   top: 200px;
+//   animation: log 1s;
+//   background-color: white;
+//   padding: 50px;
+// }
 
 @keyframes log {
   0% {
@@ -338,8 +346,11 @@ nav {
 }
 
 .home-container {
-  display: flex;
-  justify-content: space-between;
+  display: block;
+  @media (min-width: 1024px) {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .products-container {
@@ -353,10 +364,37 @@ nav {
 
 .product-nav {
   z-index: 1;
+  display: flex;
+  @media (min-width: 1023px) {
+    display: block;
+  }
 }
 
 .space {
   height: 350px;
+}
+.login {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+  h1 {
+    flex: left;
+    text-align: left;
+    // border-bottom: 1.5px solid #444;
+    width: 250px;
+  }
+
+  input {
+    width: 250px;
+  }
 }
 .signup {
   display: flex;
@@ -367,11 +405,32 @@ nav {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
   }
+  h1 {
+    flex: left;
+    text-align: left;
+    // border-bottom: 1.5px solid #444;
+    width: 250px;
+  }
+
+  input {
+    width: 250px;
+  }
+}
+
+.google-login {
+  margin: 0 25px;
+  border-radius: 30px;
 }
 
 .nav-link {
   color: #444;
+  padding: 5px;
+  // background-color: white;
+  // box-shadow: 0 2.8px 3px rgba(0, 0, 0, 0.034);
+  // border-radius: 5px;
+  // width: 120px;
 }
 
 .button-link {
@@ -394,6 +453,9 @@ nav {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-evenly;
+    border-radius: 20px;
+    padding: 10px;
+    padding-bottom: 40px;
     @media (min-width: 1023px) {
       width: 600px;
     }
@@ -411,4 +473,78 @@ nav {
   width: 100px;
   height: 100px;
   mix-blend-mode: multiply;
+}
+
+.selected {
+  border-bottom: 1px solid rgb(226, 169, 146);
+  font-size: 1.3rem;
+}
+
+.nav-cover {
+  background-color: rgb(226, 169, 146);
+  width: 100px;
+  height: 50px;
+  z-index: -1;
+  position: relative;
+  top: -10px;
+  left: -80px;
+}
+
+.anim-typewriter {
+  animation: typewriter 4s steps(44) 1s 1 normal both,
+    blinkTextCursor 500ms steps(44) infinite normal;
+}
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 24em;
+  }
+}
+@keyframes blinkTextCursor {
+  from {
+    border-right-color: rgba(255, 255, 255, 0.75);
+  }
+  to {
+    border-right-color: transparent;
+  }
+}
+.line-1 {
+  position: relative;
+  top: 50%;
+  width: 50px;
+  margin: 0 auto;
+  border-right: 2px solid rgba(255, 255, 255, 0.75);
+  font-size: 180%;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  transform: translateY(-50%);
+}
+
+.logout-btn {
+  padding: 8px 16px;
+  margin: 0;
+}
+
+.review-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  div {
+    width: 360px;
+    @media (min-width: 1027px) {
+      width: 600px;
+    }
+  }
+}
+
+.landing-link {
+  text-decoration: none;
+}
+
+.price-container {
+  margin: 50px 0;
 }

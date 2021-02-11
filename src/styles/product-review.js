@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 export const ReviewProductContainer = styled.div`
   width: 340px;
   border-radius: 20px;
-  background: white;
+  /* background: white; */
   padding: 15px;
   margin: 10px auto;
   @media (min-width: 1023px) {
@@ -23,6 +23,7 @@ export const ReviewImageContainer = styled.div`
   width: 60px;
   height: 60px;
   flex:1;
+  margin:auto 0;
 
   h5{
     
@@ -30,12 +31,12 @@ export const ReviewImageContainer = styled.div`
  
     @media (min-width: 1023px) {
         width: 100px;
-  height:100px;
+  height:90px;
  
         }
 
   img{
-    width:100%;
+    width:90%;
     height:auto;
   `}
 `;
@@ -48,6 +49,7 @@ export const ProductHeader = styled.div`
     color: grey;
     flex: 1;
     text-align: center;
+    font-size: 0.8rem;
   }
 `;
 
@@ -58,10 +60,15 @@ export const InfoContainer = styled.div`
 
   p {
     text-align: center;
+    font-size: 0.8rem;
   }
   h5 {
   }
   @media (min-width: 1023px) {
     /* display: */
   }
+`;
+
+export const PayPalContainer = styled.div`
+  width: 400px;
 `;

@@ -6,7 +6,9 @@ import {
   Actions,
   Price,
   AddToCart,
+  TestDiv,
 } from "./../styles/product-details";
+
 import { ShopButton } from "./../styles/landing";
 import { connect } from "react-redux";
 import { addProductToCart, addProduct } from "./../actions/cartActions";
@@ -48,10 +50,24 @@ function ProductDetailsPage(props) {
     }
   };
 
+  const imageVariant = {
+    hidden: {
+      opacity: 0,
+    },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.5, delay: 0.5 },
+    },
+    exit: {
+      opacity: 0,
+      transition: { ease: "easeInOut", duration: 0.5 },
+    },
+  };
+
   const containerVariant = {
     hidden: {
       opacity: 0,
-      x: "-100vw",
+      x: "100vw",
     },
     visible: {
       opacity: 1,
@@ -133,6 +149,27 @@ function ProductDetailsPage(props) {
     setQuantity(quantity + 1);
   };
 
+  const colors = [
+    "226, 169, 146",
+    "190, 216, 165",
+    "139, 168, 226",
+    "176, 227, 232",
+  ];
+
+  const handleRandomColor = () => {
+    const length = colors.length;
+
+    const randomIndex = Math.floor(Math.random() * length);
+    if (product.category === "men") {
+      return colors[3];
+    } else if (product.category === "woman") {
+      return colors[0];
+    } else {
+      return colors[2];
+    }
+    return colors[randomIndex];
+  };
+
   const getProduct = () => {
     const productId = props.match.params.detailsId;
     productService
@@ -152,40 +189,42 @@ function ProductDetailsPage(props) {
     >
       <DetailsContainer>
         <ArrowBackIcon onClick={() => props.history.goBack()} />
-
-        <DetailsImageContainer>
+        <DetailsImageContainer color={handleRandomColor()}>
           <img src={product.image} />
-        </DetailsImageContainer>
+          <TestDiv color={handleRandomColor()} />
+        </DetailsImageContainer>{" "}
         <InfoContainer>
-          <h2>{product.name}</h2>
-          <p>{product.description}</p>
-          <Actions>
-            <Price>
-              {product.sale && (
-                <h5>
+          <motion.div variants={imageVariant}>
+            <h2>{product.name}</h2>
+            <p>{product.description}</p>
+            <Actions>
+              <Price>
+                {product.sale && (
+                  <h5>
+                    {" "}
+                    &euro;
+                    {handleNumberDecimal(product.oldPrice)}
+                  </h5>
+                )}
+                <h4>
                   {" "}
                   &euro;
-                  {handleNumberDecimal(totalQuantity(product.oldPrice))}
-                </h5>
-              )}
-              <h4>
-                {" "}
-                &euro;
-                {product.price &&
-                  handleNumberDecimal(totalQuantity(product.price))}
-              </h4>
-            </Price>
-            <AddToCart>
-              <Quantity
-                handleIncrement={handleIncrement}
-                handleDecrement={handleDecrement}
-                quantity={quantity}
-              />
+                  {product.price &&
+                    handleNumberDecimal(totalQuantity(product.price))}
+                </h4>
+              </Price>
+              <AddToCart>
+                <Quantity
+                  handleIncrement={handleIncrement}
+                  handleDecrement={handleDecrement}
+                  quantity={quantity}
+                />
 
-              {success ? successAnimation() : cartOrLogin()}
-            </AddToCart>
-            {success && <Button>Go To Checkout</Button>}
-          </Actions>
+                {success ? successAnimation() : cartOrLogin()}
+              </AddToCart>
+              {/* {success && <Button>Go To Checkout</Button>} */}
+            </Actions>
+          </motion.div>
         </InfoContainer>
       </DetailsContainer>
       <div className="space"></div>

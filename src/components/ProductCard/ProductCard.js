@@ -3,13 +3,15 @@ import {
   ProductCardLayout,
   TruePrice,
   PriceContainer,
+  TestDiv,
+  DetailsImageContainer,
 } from "./../../styles/product-card";
 
 function ProductCard(props) {
   const product = props.product;
-  console.log(props);
+  // {/* <div className="image-container"> */}
   return (
-    <ProductCardLayout onClick={() => props.eventClick(product)}>
+    <ProductCardLayout>
       {product.sale ? (
         <div className="image-container">
           <img src={product.image} alt="product" />
@@ -19,6 +21,7 @@ function ProductCard(props) {
         <img src={product.image} alt="product" />
       )}
       <h3>{product.name}</h3>
+
       <PriceContainer>
         {product.sale && (
           <p className="old-price">

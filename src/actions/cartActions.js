@@ -116,3 +116,9 @@ export const emptyCart = () => {
     type: "EMPTY_CART",
   };
 };
+
+export const cartLogout = () => {
+  return {
+    type: "CART_LOGOUT",
+  };
+};

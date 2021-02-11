@@ -12,17 +12,19 @@ import {
 } from "./../styles/product-review";
 import { loadStripe } from "@stripe/stripe-js";
 import { ProgressBar, ProgressItem } from "./../styles/checkout";
-
+import { motion } from "framer-motion";
 import { Button } from "./../styles/button";
 import paymentService from "./../lib/payment-service";
 import ReviewCart from "./../components/ReviewCart";
 import AddressReview from "./../components/AddressReview";
+import PayPal from "./../components/PayPal";
+import { withRouter } from "react-router-dom";
 
 const stripePromise = loadStripe(
   "pk_test_51IBgegFmgEKSMttvbJS0troDCWkHcpkFlS9n6kFzNvWyoKkSekYs45Ty53Sy6YbDerQNXvCCYpXrVMOQR7GcYpl0001rk9IfxI"
 );
 
-function Review() {
+function Review(props) {
   const [user, setUser] = useState({});
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -43,14 +45,29 @@ function Review() {
       })
       .catch((err) => console.log(err));
   };
+  const containerVariant = {
+    hidden: {
+      opacity: 0,
+      x: "-100vw",
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { type: "spring", stiffness: 90, duration: 0.5 },
+    },
+    exit: {
+      x: "+100vw",
+      transition: { ease: "easeInOut", duration: 0.5 },
+    },
+  };
 
   const calculateTotal = () => {
     if (user.cart) {
-      const total = user.cart.reduce((total, item) => {
+      let total = user.cart.reduce((total, item) => {
         total += item.product.price * item.quantity;
         return total;
       }, 0);
-
+      total = total + 10;
       setTotalPrice(total);
     }
   };
@@ -64,10 +81,13 @@ function Review() {
       .then((response) => {
         console.log("RESPONSE", response);
         const { id } = response;
-        return stripe.redirectToCheckout({ sessionId: id });
+        return stripe.redirectToCheckout({
+          sessionId: id,
+        });
       })
       .then((result) => {
-        console.log("succes");
+        console.log("results", result);
+        props.history.push("/success/?success=true");
       })
       .catch((err) => console.log(err));
   };
@@ -90,53 +110,79 @@ function Review() {
 
   console.log(user);
   return (
-    <React.Fragment>
+    <motion.div
+      variants={containerVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <ProgressBar>
-        <ProgressItem color="228, 103, 46" background="255, 255, 255">
+        <ProgressItem color="139, 168, 226" background="255, 255, 255">
           Your Details
         </ProgressItem>
-        <ProgressItem color="255, 255, 255" background="228, 103, 46">
+        <ProgressItem color="255, 255, 255" background="139, 168, 226">
           Review
         </ProgressItem>
-        <ProgressItem color="228, 103, 46" background="255, 255, 255">
+        <ProgressItem color="139, 168, 226" background="255, 255, 255">
           Success
         </ProgressItem>
       </ProgressBar>
-      <ReviewContainer>
-        {user.address && <AddressReview address={user.address} />}
-        <DetailsContainer>
-          <h5>Your Details</h5>
-          <p>Name: {user.name}</p>
-          <p>Email: {user.email}</p>
-        </DetailsContainer>
-      </ReviewContainer>
-      <ReviewProductContainer>
-        <ProductHeader>
-          <p>Item</p>
-          <p>Description</p>
-          <p>Quantity</p>
-          <p>Price</p>
-          <p>Total</p>
-        </ProductHeader>
-        {user.cart &&
-          user.cart.map((item) => {
-            return (
-              <ReviewCart
-                handleNumberDecimal={handleNumberDecimal}
-                product={item.product}
-                quantity={item.quantity}
-              />
-            );
-          })}
-        <Price>
-          <p>Total: &euro;{handleNumberDecimal(totalPrice)}</p>
-        </Price>
-      </ReviewProductContainer>
-      <PayNow>
-        <Button onClick={makePayment}>Pay Now</Button>
-      </PayNow>
-    </React.Fragment>
+
+      <div className="review-container">
+        <div>
+          <ReviewContainer>
+            {user.address && <AddressReview address={user.address} />}
+            <DetailsContainer>
+              <h5>Your Details</h5>
+              <p>Name: {user.name}</p>
+              <p>Email: {user.email}</p>
+            </DetailsContainer>
+          </ReviewContainer>
+        </div>
+        <div className="price-container">
+          <PayPal price={totalPrice} />
+          <PayNow>
+            <button onClick={makePayment}>
+              Pay with <span>STRIPE</span>
+            </button>
+          </PayNow>
+          <ReviewProductContainer>
+            <ProductHeader>
+              <p>Item</p>
+              <p>Title</p>
+              <p>Quantity</p>
+              <p>Price</p>
+              <p>Total</p>
+            </ProductHeader>
+            {user.cart &&
+              user.cart.map((item) => {
+                return (
+                  <ReviewCart
+                    handleNumberDecimal={handleNumberDecimal}
+                    product={item.product}
+                    quantity={item.quantity}
+                  />
+                );
+              })}
+            <Price>
+              <div className="totals">
+                <div>
+                  <h5>Sub Total:</h5>{" "}
+                  <p>&euro;{handleNumberDecimal(totalPrice - 10)}</p>
+                </div>
+                <div>
+                  <h5>Shipping:</h5> <p>&euro;10.00</p>
+                </div>
+                <div className="final-total">
+                  <h5>Total:</h5> <p>&euro;{handleNumberDecimal(totalPrice)}</p>
+                </div>
+              </div>
+            </Price>
+          </ReviewProductContainer>
+        </div>
+      </div>
+    </motion.div>
   );
 }
 
-export default Review;
+export default withRouter(Review);

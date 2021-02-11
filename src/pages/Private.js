@@ -83,28 +83,18 @@ function Private(props) {
     >
       <CheckoutContainer>
         <ProgressBar>
-          <ProgressItem color="255, 255, 255" background="228, 103, 46">
+          <ProgressItem color="255, 255, 255" background="139, 168, 226">
             Your Details
           </ProgressItem>
-          <ProgressItem color="228, 103, 46" background="255, 255, 255">
+          <ProgressItem color="139, 168, 226" background="255, 255, 255">
             Review
           </ProgressItem>
-          <ProgressItem color="228, 103, 46" background="255, 255, 255">
+          <ProgressItem color="139, 168, 226" background="255, 255, 255">
             Success
           </ProgressItem>
         </ProgressBar>
-
         <EnterDetails />
-
-        <h2>Welcome {props.user && props.user.username}</h2>
-
-        <p style={{ float: "right" }} onClick={makePayment}>
-          Buy Now
-        </p>
       </CheckoutContainer>
-      <div>{message}</div>
-
-      <button onClick={handleCart}>Change cart</button>
     </motion.div>
   );
 }

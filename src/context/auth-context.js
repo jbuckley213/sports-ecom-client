@@ -46,6 +46,18 @@ class AuthProvider extends React.Component {
       });
   };
 
+  googleLogin = (googleData) => {
+    authService
+      .googleLogin(googleData)
+      .then((user) => {
+        console.log(user);
+        this.setState({ isLoggedIn: true, user });
+      })
+      .catch((err) => {
+        this.setState({ isLoggedIn: false, user: null });
+      });
+  };
+
   logout = () => {
     authService
       .logout()
@@ -61,7 +73,7 @@ class AuthProvider extends React.Component {
       loginFailed,
       signupFailed,
     } = this.state;
-    const { signup, login, logout } = this;
+    const { signup, login, logout, googleLogin } = this;
 
     if (isLoading) return <p>Loading</p>;
 
@@ -76,6 +88,7 @@ class AuthProvider extends React.Component {
           signup,
           login,
           logout,
+          googleLogin,
         }}
       >
         {this.props.children}
@@ -100,6 +113,7 @@ const withAuth = (WrappedComponent) => {
               signup,
               login,
               logout,
+              googleLogin,
             } = value;
 
             return (
@@ -113,6 +127,7 @@ const withAuth = (WrappedComponent) => {
                 signup={signup}
                 login={login}
                 logout={logout}
+                googleLogin={googleLogin}
               />
             );
           }}

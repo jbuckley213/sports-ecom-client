@@ -8,6 +8,8 @@ import { Button } from "./../styles/button";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { withRouter } from "react-router-dom";
 import paymentService from "./../lib/payment-service";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import { FormSideBar } from "./../styles/checkout";
 
 function EnterDetails(props) {
   // state = { username: "", password: "" };
@@ -18,7 +20,7 @@ function EnterDetails(props) {
     city: "",
     postcode: "",
     country: "",
-    email: "",
+    // email: "",
   });
 
   const handleSubmitValidation = () => {
@@ -36,6 +38,7 @@ function EnterDetails(props) {
         valid = true;
       }
     });
+    console.log(valid);
     return valid;
   };
 
@@ -70,11 +73,11 @@ function EnterDetails(props) {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    const { name, email, building, city, street, postcode, country } = inputs;
+    const { name, building, city, street, postcode, country } = inputs;
 
     // Call funciton coming from AuthProvider ( via withAuth )
     paymentService
-      .saveDetails(name, building, city, street, postcode, country, email)
+      .saveDetails(name, building, city, street, postcode, country)
       .then((data) => {
         console.log(data);
         props.history.push("/review");
@@ -126,7 +129,7 @@ function EnterDetails(props) {
       transition: { ease: "easeInOut", duration: 0.5 },
     },
   };
-  const { name, email, building, city, street, postcode, country } = inputs;
+  const { name, building, city, street, postcode, country } = inputs;
 
   const handleTest = () => {
     setInputs({
@@ -148,8 +151,7 @@ function EnterDetails(props) {
       exit="exit"
     >
       <ArrowBackIcon onClick={() => props.history.goBack()} />
-      <h1>Your Details</h1>
-      <button onClick={handleTest}>Just Testing? Click here</button>
+      {/* <button onClick={handleTest}>Just Testing? Click here</button> */}
       <form
         className={classes.root}
         noValidate
@@ -157,21 +159,23 @@ function EnterDetails(props) {
         onSubmit={handleFormSubmit}
       >
         <div className="form-container">
+          <FormSideBar left="30px">
+            <h1>Your Details</h1>
+          </FormSideBar>
           <div>
             <motion.div variants={variant} animate="visible" inital="hidden">
               <TextField
                 id="outlined-basic"
-                label="Name"
                 type="text"
+                label="Name"
                 name="name"
                 value={name}
                 onChange={handleChange}
-                placeholder="Username"
                 error={error && inputValidation(name)}
               />
             </motion.div>
 
-            <motion.div variants={variant} animate="visible" inital="hidden">
+            {/* <motion.div variants={variant} animate="visible" inital="hidden">
               <TextField
                 className="inputs"
                 id="outlined-basic"
@@ -180,68 +184,64 @@ function EnterDetails(props) {
                 name="email"
                 value={email}
                 onChange={handleChange}
-                placeholder="Password"
                 error={error && inputValidation(email)}
               />
-            </motion.div>
+            </motion.div> */}
 
             <TextField
               id="outlined-basic"
-              label="Country"
               type="text"
+              label="Country"
               name="country"
               value={country}
               onChange={handleChange}
-              placeholder="Password"
               error={error && inputValidation(country)}
+            />
+            <TextField
+              id="outlined-basic"
+              type="text"
+              name="postcode"
+              label="Postcode"
+              value={postcode}
+              onChange={handleChange}
+              error={error && inputValidation(postcode)}
             />
           </div>
           <div>
             <TextField
               id="outlined-basic"
-              label="Building"
               type="text"
+              label="Building"
               name="building"
               value={building}
               onChange={handleChange}
-              placeholder="Password"
               error={error && inputValidation(building)}
             />
             <TextField
               id="outlined-basic"
-              label="Street"
               type="text"
+              label="Street"
               name="street"
               value={street}
               onChange={handleChange}
-              placeholder="Password"
               error={error && inputValidation(street)}
             />
 
             <TextField
               id="outlined-basic"
-              label="City"
               type="text"
               name="city"
+              label="City"
               value={city}
               onChange={handleChange}
-              placeholder="Password"
               error={error && inputValidation(city)}
             />
-
-            <TextField
-              id="outlined-basic"
-              label="Postcode"
-              type="text"
-              name="postcode"
-              value={postcode}
-              onChange={handleChange}
-              placeholder="Password"
-              error={error && inputValidation(postcode)}
-            />
           </div>
+          {/* formValidation() */}
           <Button disabled={formValidation()} type="submit">
-            <div onClick={handleSubmitValidation}>Continue</div>
+            <div onClick={handleSubmitValidation}>
+              <ArrowForwardIcon />
+            </div>
           </Button>
         </div>
       </form>

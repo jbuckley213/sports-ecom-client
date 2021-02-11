@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { ProductSideNav } from "./../styles/product-card";
 
 const variants = {
@@ -38,36 +38,52 @@ function ProductNav() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
-          <Link className="nav-link" to={{ pathname: `/home/all` }}>
-            Home
-          </Link>
+          <NavLink
+            activeClassName="selected"
+            className="nav-link"
+            to={{ pathname: `/home/all` }}
+          >
+            All
+          </NavLink>
         </motion.li>
         <motion.li
           variants={variantsLinks}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
-          <Link className="nav-link" to={{ pathname: `/home/men` }}>
+          <NavLink
+            activeClassName="selected"
+            className="nav-link"
+            to={{ pathname: `/home/men` }}
+          >
             Men
-          </Link>
+          </NavLink>
         </motion.li>
         <motion.li
           variants={variantsLinks}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
-          <Link className="nav-link" to={{ pathname: `/home/woman` }}>
+          <NavLink
+            activeClassName="selected"
+            className="nav-link"
+            to={{ pathname: `/home/woman` }}
+          >
             Women
-          </Link>
+          </NavLink>
         </motion.li>
         <motion.li
           variants={variantsLinks}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
-          <Link className="nav-link" to={{ pathname: `/home/fitness` }}>
+          <NavLink
+            activeClassName="selected"
+            className="nav-link"
+            to={{ pathname: `/home/fitness` }}
+          >
             Fitness
-          </Link>
+          </NavLink>
         </motion.li>
       </motion.ul>
     </ProductSideNav>

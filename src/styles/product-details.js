@@ -20,20 +20,38 @@ export const DetailsImageContainer = styled.div`
     
   width: 340px;
   height: 340px;
- 
-    @media (min-width: 1023px) {
+  
+    @media (min-width: 720px) {
         width: 40%;
   height: 50%;
   position: relative;
     left: 50px;
     z-index: -1;
     top: 70px;
+    background: linear-gradient(
+    rgba(${(props) => props.color}, 0.4),
+    rgba(${(props) => props.color}, 0.8)
+  ); 
         }
 
   img{
     width:100%;
     height:auto;
+    mix-blend-mode: multiply; 
+
   `}
+`;
+
+export const TestDiv = styled.div`
+  @media (min-width: 720px) {
+    width: 500px;
+    height: 450px;
+    z-index: -1;
+    background: white;
+    position: fixed;
+    top: 150px;
+    left: 13%;
+  }
 `;
 
 export const InfoContainer = styled.div`
@@ -71,6 +89,6 @@ export const AddToCart = styled.div`
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    width: 250px;
+    width: 450px;
   }
 `;

@@ -3,6 +3,10 @@ import { connect } from "react-redux";
 import ProductCart from "./../components/ProductCart/ProductCart";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { motion } from "framer-motion";
+import { CartHeader, EmptyCart } from "./../styles/product-card";
+import { Link } from "react-router-dom";
+import { Button } from "./../styles/button";
+import { CheckoutContainer } from "./../styles/cart";
 
 function ShoppingCart(props) {
   let total = 10;
@@ -46,14 +50,14 @@ function ShoppingCart(props) {
       animate="visible"
       exit="exit"
     >
-      <h1>ShoppingCart</h1>
+      <CartHeader>ShoppingCart</CartHeader>
 
       {props.cart.map((product) => {
         total += product.quantity * product.price;
         return (
           <div key={product._id}>
             <ProductCart
-              width={"30%"}
+              width={"20%"}
               handleNumberDecimal={handleNumberDecimal}
               product={product}
             />
@@ -61,7 +65,12 @@ function ShoppingCart(props) {
         );
       })}
       {props.cart.length === 0 ? (
-        <p>There are no items in your cart</p>
+        <EmptyCart>
+          <p>There are no items in your cart</p>
+          <Link className="link" to="/home/all">
+            Check out some products
+          </Link>
+        </EmptyCart>
       ) : (
         <div className="totals">
           <div>
@@ -74,6 +83,13 @@ function ShoppingCart(props) {
             <h5>Total:</h5> <p>&euro;{handleNumberDecimal(total)}</p>
           </div>
         </div>
+      )}
+      {props.cart.length !== 0 && (
+        <CheckoutContainer>
+          <Link style={{ textDecoration: "none" }} to="/private">
+            <Button style={{ float: "right" }}>Checkout</Button>
+          </Link>
+        </CheckoutContainer>
       )}
     </motion.div>
   );

@@ -14,6 +14,8 @@ import {
   Info,
   ShopButton,
   ImageProductContainer,
+  TestDiv,
+  TestDivTwo,
 } from "./../styles/landing";
 
 function Landing() {
@@ -76,14 +78,16 @@ function Landing() {
           <TitleHeader>Welcome To SportHub</TitleHeader>
           <Divider />
           <Info>Buy active gear at a reasonable price.</Info>
-          <Link to="/home/all">
+          <Link style={{ textDecoration: "none" }} to="/home/all">
             <ShopButton>Shop Now</ShopButton>
           </Link>
         </motion.div>
         <ImageHeaderContainer image={"/hike.jpg"}>
           <h1 className="moblie-title">Welcome To SportHub</h1>
           <div className="moblie-title">
-            <ShopButton>Shop Now</ShopButton>
+            <Link style={{ textDecoration: "none" }} to="/home/all">
+              <ShopButton>Shop Now</ShopButton>
+            </Link>
           </div>
         </ImageHeaderContainer>
       </Header>{" "}
@@ -93,6 +97,8 @@ function Landing() {
           <ImageProductContainer color="226, 169, 146">
             <img src={products[0].image} />{" "}
             <p>&euro;{handleNumberDecimal(products[0].price)}</p>
+            {/* <TestDiv zIndex="1" top="-150px" left="10px" /> */}
+            <TestDiv zIndex="-1" top="-300px" left="10px" />
           </ImageProductContainer>
         )}
 
@@ -100,31 +106,42 @@ function Landing() {
           <ImageProductContainer color="176, 227, 232">
             <img src={products[1].image} />{" "}
             <p>&euro;{handleNumberDecimal(products[1].price)}</p>
+            <TestDiv zIndex="1" top="-150px" left="10px" />
+            <TestDiv zIndex="-1" top="-300px" left="10px" />
+            {/* <TestDivTwo zIndex="-1" top="-600px" left="10px" /> */}
+            {/* <TestDivTwo zIndex="1" top="-600px" left="100px" /> */}
           </ImageProductContainer>
         )}
         {products[0] && (
           <ImageProductContainer color="190, 216, 165">
             <img src={products[2].image} />{" "}
             <p>&euro;{handleNumberDecimal(products[2].price)}</p>
+            {/* <TestDiv zIndex="1" top="-150px" left="10px" /> */}
+            <TestDiv zIndex="-1" top="-300px" left="10px" />
           </ImageProductContainer>
         )}
       </LandingContainer>
       <LandingContainer>
-        <ImageContainer image="/swimmer.jpg" color="139, 168, 226">
-          <Title>Best Prices</Title>
-        </ImageContainer>
-
-        <ImageContainer image="/men.jpg" color="226, 169, 146">
-          <Title>For Men</Title>
-        </ImageContainer>
-
-        <ImageContainer image="/handstand.jpg" color="176, 227, 232">
-          <Title>For Women</Title>
-        </ImageContainer>
-
-        <ImageContainer image="/fitness.jpg" color="190, 216, 165">
-          <Title>For Fitness</Title>
-        </ImageContainer>
+        <Link style={{ textDecoration: "none" }} to="/home/all">
+          <ImageContainer image="/swimmer.jpg" color="139, 168, 226">
+            <Title>Best Prices</Title>
+          </ImageContainer>
+        </Link>
+        <Link style={{ textDecoration: "none" }} to="/home/men">
+          <ImageContainer image="/men.jpg" color="226, 169, 146">
+            <Title>For Men</Title>
+          </ImageContainer>
+        </Link>
+        <Link style={{ textDecoration: "none" }} to="/home/women">
+          <ImageContainer image="/handstand.jpg" color="176, 227, 232">
+            <Title>For Women</Title>
+          </ImageContainer>
+        </Link>
+        <Link style={{ textDecoration: "none" }} to="/home/fitness">
+          <ImageContainer image="/fitness.jpg" color="190, 216, 165">
+            <Title>For Fitness</Title>
+          </ImageContainer>
+        </Link>
       </LandingContainer>
     </motion.div>
   );

@@ -18,6 +18,7 @@ import Landing from "./pages/Landing";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import Review from "./pages/Review";
+import Badge from "@material-ui/core/Badge";
 
 import AnonRoute from "./components/AnonRoute";
 import PrivateRoute from "./components/PrivateRoute";
@@ -48,9 +49,10 @@ function App(props) {
       <AnimatePresence exitBeforeEnter>
         {showCart && <SideCart toggleCart={toggleCart} />}
       </AnimatePresence>
-      {/* exitBeforeEnter */}
       <CartButton onClick={toggleCart}>
-        <ShoppingBasketIcon />
+        <Badge badgeContent={props.cart.length} color="primary">
+          <ShoppingBasketIcon />
+        </Badge>
       </CartButton>
       <div className="page-container">
         <AnimatePresence exitBeforeEnter>
@@ -96,6 +98,12 @@ function App(props) {
   );
 }
 
+const mapStateToProps = (state) => {
+  return {
+    cart: state.cart,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     getCart: () => {
@@ -104,4 +112,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(withAuth(App));
+export default connect(mapStateToProps, mapDispatchToProps)(withAuth(App));

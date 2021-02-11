@@ -33,7 +33,7 @@ function Home(props) {
       transition: { duration: 0.5 },
     },
     exit: {
-      x: "100vw",
+      x: "-100vw",
       transition: { ease: "easeInOut", duration: 0.5 },
     },
   };
@@ -53,7 +53,7 @@ function Home(props) {
       x: "-100vw",
       transition: {
         type: "spring",
-        duration: 1,
+        duration: 0.5,
       },
     },
   };
@@ -176,7 +176,6 @@ function Home(props) {
                 return (
                   <Link className="nav-link" to={`/details/${product._id}`}>
                     <ProductCard
-                      eventClick={toggleProductDetails}
                       key={product._id}
                       product={product}
                       numberToCurrency={handleNumberDecimal}

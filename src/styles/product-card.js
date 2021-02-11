@@ -9,7 +9,8 @@ export const ProductCardLayout = styled.div`
 
    margin:20px; 
    border-radius:10px;
- 
+   background:white;
+    z-index:2;
    padding:10px;
    box-shadow:
                 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
@@ -38,6 +39,8 @@ export const ProductCardLayout = styled.div`
         
   border-radius:5px;
   mix-blend-mode: multiply;
+  z-index:4;
+
 
  
     
@@ -49,7 +52,11 @@ export const ProductCardLayout = styled.div`
     rgba(176, 227, 232, 0.5) */
     }
     height:230px;
+    z-index:3;
     background: linear-gradient(135deg, #ffffff 5%,   #5cbcb0 5%,  #5cbcb0 15%, #ffffff  15%);
+;
+
+
     p{
       transform: rotate(320deg);
       position: relative;
@@ -60,10 +67,12 @@ export const ProductCardLayout = styled.div`
   
   border-radius:5px;
   }
+ 
   h3{
       margin:30px 0;
       font-size:1rem;
       width:90%;
+    font-weight:500;
   }
   .old-price {
     color: #444;
@@ -73,14 +82,60 @@ export const ProductCardLayout = styled.div`
 `}
 `;
 
+export const DetailsImageContainer = styled.div`
+  height: 230px;
+
+  background: linear-gradient(
+    135deg,
+    #ffffff 5%,
+    #5cbcb0 5%,
+    #5cbcb0 15%,
+    #ffffff 15%
+  );
+  z-index: -1;
+
+  border-radius: 5px;
+
+  p {
+    transform: rotate(320deg);
+    position: relative;
+    top: -278px;
+    right: 19px;
+    text-decoration: none;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    mix-blend-mode: multiply;
+    position: relative;
+    top: 50px;
+    left: 10px;
+  }
+`;
+
+export const TestDiv = styled.div`
+  width: 230px;
+  height: 250px;
+  z-index: 1;
+  background: white;
+  position: relative;
+  top: -240px;
+  left: 8%;
+  background: linear-gradient(rgba(226, 169, 146, 1), rgba(226, 169, 146, 1));
+`;
+
 export const TruePrice = styled.p`
   color: #444;
   text-decoration: none;
+  font-weight: 600;
 `;
 
 export const PriceContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: left;
+  background: white;
+  z-index: 1;
 `;
 
 export const ImageProductContainer = styled.div`
@@ -181,10 +236,14 @@ export const ProductCartLayout = styled.div`
     @media (min-width: 1023px) {
       width: 95%;
       justify-content:space-evenly;
+
       
   }
     .img-div{
         width:90%;
+        ${"" /* background:rgba(226, 169, 146); */}
+        z-index:2;
+
         @media (min-width: 1023px) {
       width: ${(props) => props.width};
         }
@@ -200,6 +259,9 @@ export const ProductCartLayout = styled.div`
                 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
                 0 100px 80px rgba(0, 0, 0, 0.12);
   border-radius:5px;
+  mix-blend-mode:multiply; 
+  z-index:3;
+
   @media (min-width: 1023px) {
       ${"" /* width: 50%; */}
       margin:0 auto;
@@ -212,6 +274,16 @@ export const ProductCartLayout = styled.div`
         @media (min-width: 1023px) {
           width: ${(props) => props.width};
       }
+  }
+
+  .background-div{
+    width:200px;
+    height:200px;
+    background:white;
+    position:fixed;
+    top:-225px;
+    left:15px;
+    z-index:-1;
   }
     }
     h2{
@@ -230,7 +302,7 @@ export const Modal = styled.div`
 `;
 
 export const ProductSideNav = styled.div`
-  display: none;
+  display: block;
   @media (min-width: 1023px) {
     display: block;
   }
@@ -261,4 +333,21 @@ export const HeaderImage = styled.div`
     color:white;
     letter-spacing:3px;
   `}
+`;
+
+export const CartHeader = styled.h1`
+  text-align: center;
+  margin: 20px 0;
+`;
+
+export const EmptyCart = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  p {
+    text-align: center;
+  }
+  a {
+    margin: 0 auto;
+  }
 `;
