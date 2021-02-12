@@ -188,7 +188,7 @@ function Login(props) {
         </form>
         <GoogleLogin
           className="google-login"
-          clientId="687427569890-43sl05f68lh2ncs56ce50uqnrg963o48.apps.googleusercontent.com"
+          clientId={process.env.CLIENT_ID}
           buttonText="Log in with Google"
           onSuccess={handleLogin}
           onFailure={handleLogin}

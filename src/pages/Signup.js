@@ -7,6 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import { Button } from "./../styles/button";
 import { withRouter } from "react-router-dom";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import GoogleLogin from "react-google-login";
 
 function Signup(props) {
   // state = { username: "", password: "" }
@@ -74,6 +75,10 @@ function Signup(props) {
     },
   };
 
+  const handleLogin = async (googleData) => {
+    props.googleLogin(googleData);
+  };
+
   const { email, password } = inputs;
   const classes = useStyles();
 
@@ -123,6 +128,15 @@ function Signup(props) {
           <div onClick={handleSubmitValidation}>Sign Up</div>
         </Button>
       </form>
+      <GoogleLogin
+        className="google-login"
+        clientId="687427569890-43sl05f68lh2ncs56ce50uqnrg963o48.apps.googleusercontent.com"
+        buttonText="Log in with Google"
+        onSuccess={handleLogin}
+        onFailure={handleLogin}
+        cookiePolicy={"single_host_origin"}
+        theme="light"
+      />
       {props.signupFailed && <p>Email is already taken</p>}
 
       <p>Already have account?</p>

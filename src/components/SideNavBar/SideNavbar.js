@@ -4,6 +4,7 @@ import Navigation from "./Navigation";
 import { MenuToggle } from "./MenuToggle";
 import { useRef } from "react";
 import { useDimensions } from "./use-dimensions";
+import { withAuth } from "./../../context/auth-context";
 
 const sidebar = {
   open: (height = 1000) => ({
@@ -24,7 +25,7 @@ const sidebar = {
     },
   },
 };
-function SideNavbar() {
+function SideNavbar(props) {
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
   console.log(containerRef);
@@ -49,4 +50,4 @@ function SideNavbar() {
   );
 }
 
-export default SideNavbar;
+export default withAuth(SideNavbar);

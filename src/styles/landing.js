@@ -62,8 +62,7 @@ export const ImageContainer = styled.div`
   width: 350px;
   height: 350px;
   margin: 5px;
-  /* background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(${(props) => props.image}); */
+
   background: linear-gradient(
       rgba(${(props) => props.color}, 0.5),
       rgba(${(props) => props.color}, 0.5)

@@ -50,6 +50,8 @@ const Navigation = (props) => {
           .then(auth2.disconnect().then(handleLogout()))
           .catch((err) => console.log(err));
       }
+    } else {
+      handleLogout();
     }
   };
   return (
@@ -166,7 +168,7 @@ const Navigation = (props) => {
               Profile
             </Link>
           </motion.li>
-          <motion.li
+          {/* <motion.li
             variants={variantsLinks}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
@@ -174,19 +176,15 @@ const Navigation = (props) => {
             <p className="logout-btn" onClick={handleLogout}>
               Logout
             </p>
-          </motion.li>
+          </motion.li> */}
           <motion.li
             variants={variantsLinks}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            {/* <GoogleLogout
-              clientId="687427569890-43sl05f68lh2ncs56ce50uqnrg963o48.apps.googleusercontent.com"
-              buttonText="Logout"
-              onLogoutSuccess={props.logout}
-              onFailure={props.logout}
-            ></GoogleLogout> */}
-            <p onClick={googleLogout}>google logout</p>
+            <p className="logout-btn" onClick={googleLogout}>
+              Logout
+            </p>
           </motion.li>
         </>
       )}

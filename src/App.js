@@ -26,7 +26,7 @@ import { connect } from "react-redux";
 import { getCart } from "./actions/cartActions";
 import { withAuth } from "./context/auth-context";
 import { AnimatePresence } from "framer-motion";
-import { CartButton } from "./styles/cart";
+import { CartButton, DisplayName } from "./styles/cart";
 
 require("dotenv").config();
 
@@ -49,6 +49,12 @@ function App(props) {
       <AnimatePresence exitBeforeEnter>
         {showCart && <SideCart toggleCart={toggleCart} />}
       </AnimatePresence>
+      {props.user && (
+        <DisplayName>
+          <p className>Your Cart, {props.user.name}</p>
+        </DisplayName>
+      )}
+
       <CartButton onClick={toggleCart}>
         <Badge badgeContent={props.cart.length} color="primary">
           <ShoppingBasketIcon />
@@ -66,11 +72,11 @@ function App(props) {
             />
 
             <Route exact path="/signup">
-              {props.isLoggedIn ? <Private /> : <Signup />}
+              {props.isLoggedIn ? <Landing /> : <Signup />}
             </Route>
             <Route exact path="/login">
               {" "}
-              {props.isLoggedIn ? <Private /> : <Login />}
+              {props.isLoggedIn ? <Landing /> : <Login />}
             </Route>
 
             <Route exact path="/profile">

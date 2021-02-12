@@ -3,12 +3,21 @@ import styled, { css } from "styled-components";
 export const CartButton = styled.div`
   display: none;
   position: absolute;
-  left: 90vw;
+  left: 95vw;
   top: 4%;
   z-index: 3;
+  border: 1px solid black;
+  border-radius: 50%;
+  padding: 5px;
   @media (min-width: 1023px) {
-    display: block;
+    display: flex;
   }
+`;
+
+export const DisplayName = styled.div`
+  position: fixed;
+  left: 200px;
+  top: 30px;
 `;
 
 export const CartContainer = styled.div`

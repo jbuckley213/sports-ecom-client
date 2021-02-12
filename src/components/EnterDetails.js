@@ -48,6 +48,10 @@ function EnterDetails(props) {
 
   const handleInputs = () => {
     console.log(props.user);
+    setInputs({
+      ...inputs,
+      name: props.user.name,
+    });
     if (props.user.address) {
       const address = props.user.address;
 

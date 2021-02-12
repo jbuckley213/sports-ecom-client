@@ -32,7 +32,7 @@ const variantsLinks = {
 function ProductNav() {
   return (
     <ProductSideNav>
-      <motion.ul className="product-nav" variants={variants}>
+      <motion.ul className="product-nav home-nav" variants={variants}>
         <motion.li
           variants={variantsLinks}
           whileHover={{ scale: 1.1 }}
