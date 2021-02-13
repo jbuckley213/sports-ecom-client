@@ -2,16 +2,18 @@ import React, { useState, useEffect } from "react";
 import productService from "./../lib/product-service";
 import ProductCart from "./../components/ProductCart/ProductCart";
 import { withAuth } from "./../context/auth-context";
-import ProductHistoryItem from "./../components/ProductHistoryItem/ProductHistoryItem";
+import ProductHistory from "./../components/ProductHistoryItem/ProductHistoryItem";
 import { motion } from "framer-motion";
 import Axios from "axios";
 import { DateContainer } from "./../styles/product-history";
 import paymentService from "../lib/payment-service";
+import ReviewCartList from "./../components/ReviewCartList";
 
 function Profile(props) {
   const [previousCart, setPreviousCart] = useState([]);
 
   useEffect(() => {
+    console.log("called");
     getPaymentHistory();
   }, []);
 
@@ -39,7 +41,7 @@ function Profile(props) {
     const day = date.toDateString().split(" ").slice(0, 3).join(" ");
 
     const time = date.toLocaleString().split(" ").reverse()[0].slice(0, 5);
-    return time + " " + day;
+    return day;
   };
 
   const handleNumberDecimal = (number) => {
@@ -83,19 +85,14 @@ function Profile(props) {
       <h1>Purchase History</h1>
       {previousCart[0] &&
         previousCart.map((items) => {
-          console.log("items", items);
           return (
             <DateContainer key={items._id}>
               <p>{outputDate(items.created_at)}</p>
-              {items.items.map((item) => {
-                return (
-                  <ProductHistoryItem
-                    handleNumberDecimal={handleNumberDecimal}
-                    product={item.product}
-                    quantity={item.quantity}
-                  />
-                );
-              })}
+              <ProductHistory
+                width="90%"
+                handleNumberDecimal={handleNumberDecimal}
+                cart={items.items}
+              />
             </DateContainer>
           );
         })}

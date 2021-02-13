@@ -15,6 +15,7 @@ import SideNavbar from "./components/SideNavBar/SideNavbar";
 import Profile from "./pages/Profile";
 import SideCart from "./components/SideCart/SideCart";
 import Landing from "./pages/Landing";
+import AddProduct from "./pages/AddProduct";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import Review from "./pages/Review";
@@ -43,17 +44,19 @@ function App(props) {
     setShowCart(!showCart);
   };
 
+  console.log(props.user);
+
   return (
     <div>
       <SideNavbar />
       <AnimatePresence exitBeforeEnter>
         {showCart && <SideCart toggleCart={toggleCart} />}
       </AnimatePresence>
-      {props.user && (
+      {/* {props.user && (
         <DisplayName>
-          <p className>Your Cart, {props.user.name}</p>
+          <p>{props.user.name}</p>
         </DisplayName>
-      )}
+      )} */}
 
       <CartButton onClick={toggleCart}>
         <Badge badgeContent={props.cart.length} color="primary">
@@ -96,6 +99,13 @@ function App(props) {
             </Route>
             <Route exact path="/review">
               {props.isLoggedIn ? <Review /> : <Login />}
+            </Route>
+            <Route exact path="/add-product">
+              {props.isLoggedIn ? (
+                props.user.isAdmin && <AddProduct />
+              ) : (
+                <Landing />
+              )}
             </Route>
           </Switch>
         </AnimatePresence>

@@ -44,3 +44,12 @@ export const LoginButton = styled.button`
   border-radius: 25px;
   background-color: blueviolet;
 `;
+
+export const MoblieAction = styled.div`
+  display: block;
+  text-align: center;
+
+  @media (min-width: 1023px) {
+    display: none;
+  }
+`;

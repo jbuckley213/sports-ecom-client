@@ -2,15 +2,12 @@ import React, { useState, useEffect } from "react";
 import {
   ReviewProductContainer,
   ProductHeader,
-} from "./../../styles/product-review";
-import { Price } from "./../../styles/checkout";
-import ReviewCart from "./../ReviewCart";
+} from "./../styles/product-review";
+import { Price } from "./../styles/checkout";
+import ReviewCart from "./ReviewCart";
 
-function ProductHistory(props) {
-  console.log("props", props);
-  const [totalPrice, setTotalPrice] = useState(0);
-
-  const { cart, width } = props;
+function ReviewCartList(props) {
+  const { cart, totalPrice, width } = props;
 
   console.log("Price", totalPrice);
   const handleNumberDecimal = (number) => {
@@ -29,21 +26,7 @@ function ProductHistory(props) {
     }
   };
 
-  useEffect(() => {
-    calculateTotal();
-  }, []);
-
-  const calculateTotal = () => {
-    if (cart) {
-      let total = cart.reduce((total, item) => {
-        total += item.product.price * item.quantity;
-        return total;
-      }, 0);
-      total = total + 10;
-      setTotalPrice(total);
-    }
-  };
-
+  console.log(cart);
   return (
     <ReviewProductContainer width={width}>
       <ProductHeader>
@@ -82,4 +65,4 @@ function ProductHistory(props) {
   );
 }
 
-export default ProductHistory;
+export default ReviewCartList;

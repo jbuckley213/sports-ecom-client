@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
 
 export const ReviewProductContainer = styled.div`
-  width: 340px;
+  /* width: 340px; */
+  width: ${(props) => props.width};
   border-radius: 20px;
   /* background: white; */
   padding: 15px;
@@ -38,6 +39,7 @@ export const ReviewImageContainer = styled.div`
   img{
     width:90%;
     height:auto;
+    object-fit: contain;
   `}
 `;
 

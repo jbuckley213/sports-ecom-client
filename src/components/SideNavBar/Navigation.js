@@ -186,6 +186,17 @@ const Navigation = (props) => {
               Logout
             </p>
           </motion.li>
+          {props.user.isAdmin && (
+            <motion.li
+              variants={variantsLinks}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Link className="nav-link" to="/add-product">
+                Add Product
+              </Link>
+            </motion.li>
+          )}
         </>
       )}
     </motion.ul>

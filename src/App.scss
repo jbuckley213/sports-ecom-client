@@ -255,7 +255,7 @@ nav {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin: 0 auto;
+  margin: 0 30px;
   display: block;
   stroke-width: 2;
   stroke: $white;
@@ -312,6 +312,7 @@ nav {
   margin-top: 80px;
   background-color: #eef2f7;
   border-radius: 0 0 0 50%;
+  min-height: 100vh;
 }
 
 // .login {
@@ -388,11 +389,15 @@ nav {
   height: 350px;
 }
 .login {
-  display: flex;
+  display: block;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  width: 80%;
 
+  @media (min-width: 1023px) {
+    display: flex;
+  }
   form {
     display: flex;
     flex-direction: column;
@@ -561,4 +566,83 @@ nav {
 
 .price-container {
   margin: 50px 0;
+}
+
+.hover-img {
+  :hover {
+    transform: translate(0px, -10px) scale(1.1);
+  }
+}
+
+.form-index {
+  position: relative;
+  top: 0;
+  z-index: -1;
+  left: 13%;
+  text-align: center;
+  display: none;
+  @media (min-width: 1023px) {
+    display: block;
+    left: 0;
+  }
+}
+.signup-form-index {
+  position: relative;
+  top: 0;
+  left: 0px;
+  z-index: -1;
+  display: none;
+  @media (min-width: 1023px) {
+    display: block;
+    left: 32%;
+  }
+}
+
+.login-pos {
+  color: #eef2f7;
+  position: fixed;
+  top: 200px;
+  right: 200px;
+}
+.signup-info {
+  position: fixed;
+  top: 170px;
+}
+.login-title {
+  // padding: 40px 0;
+  position: fixed;
+  top: 170px;
+  text-align: center;
+  h1 {
+    margin: 10px 0;
+    color: #eef2f7;
+    width: 400px;
+    font-weight: 700;
+  }
+  h5 {
+    margin: 30px 0;
+    font-size: 1.2rem;
+    color: #eef2f7;
+    text-align: center;
+    font-weight: 400;
+  }
+  span {
+    color: #eef2f7;
+    margin: 0 5px;
+  }
+  button {
+    margin: 10px 0;
+
+    border: 1px solid #eef2f7;
+    background: none;
+    border-radius: 25px;
+    padding: 5px 25px;
+    color: #eef2f7;
+    font-size: 1.2rem;
+  }
+}
+
+.login-divider {
+  position: relative;
+  left: -40px;
 }

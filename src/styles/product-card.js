@@ -12,6 +12,7 @@ export const ProductCardLayout = styled.div`
    background:white;
     z-index:2;
    padding:10px;
+   transition:all 0.5s;
    box-shadow:
                 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
                 0 6.7px 5.3px rgba(0, 0, 0, 0.048),
@@ -20,6 +21,45 @@ export const ProductCardLayout = styled.div`
                 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
                 0 100px 80px rgba(0, 0, 0, 0.12);  
          
+    &:hover{
+		transform: translateY(10px);
+    color:black;
+		${"" /* background: rgba(black, 0.6); */}
+      &:before{
+			  display: block;
+    } 
+    .button-card{			
+      opacity: 1;
+
+    }
+    }
+		.info{
+			opacity: 1;
+			transform: translateY(0px);
+      }
+    
+	 &:before{
+	 content: ""; 
+		position: fixed;
+		top: 65%;
+		left: 0;
+		display: none;
+		width: 100%;
+		height: 35%;
+		border-radius: 10px;
+		background: rgba(190, 216, 165, 0.3); 
+		z-index: 6;
+		transition: 0.5s;
+		opacity: 1;
+   
+  }
+  .button-card{
+    opacity:0;
+    text-align:center;
+    background:red;
+    z-index:7;
+
+  }
   
   img{
       width:100%;

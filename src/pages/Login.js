@@ -1,28 +1,26 @@
 import React, { useState } from "react";
 import { withAuth } from "./../context/auth-context";
 import { motion } from "framer-motion";
-import {
-  LoginContainer,
-  LoginForm,
-  LoginButton,
-  ReturnButton,
-} from "./../styles/login";
+
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "./../styles/button";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
+import { MoblieAction } from "./../styles/login";
 import { connect } from "react-redux";
 import { getCart } from "./../actions/cartActions";
 import GoogleLogin from "react-google-login";
 import authService from "../lib/auth-service";
 import { FormSideBar } from "./../styles/checkout";
-import { Opacity } from "@material-ui/icons";
+import LoginForm from "./../components/LoginForm";
+import Signup from "./Signup";
 
 function Login(props) {
   // state = { username: "", password: "" };
   const [inputs, setInputs] = useState({ email: "", password: "" });
   const [error, setError] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -35,7 +33,8 @@ function Login(props) {
     root: {
       "& > *": {
         margin: theme.spacing(1),
-        width: "25ch",
+        // width: "25ch",
+        width: "40ch",
       },
     },
   }));
@@ -44,24 +43,28 @@ function Login(props) {
     const { name, value } = event.target;
     setInputs({ ...inputs, [name]: value });
   };
+  const duration = 1;
+
   const containerVariant = {
     visible: {
       x: 0,
+      opacity: 1,
       transition: {
-        duration: 0.5,
-        type: "spring",
-        stiffness: 90,
-        staggerChildren: 0.07,
-        delayChildren: 0.2,
+        duration: 0.8,
+        // type: "spring",
+        // stiffness: 90,
+        // staggerChildren: 0.07,
+        // delayChildren: 0.2,
       },
     },
     hidden: {
       x: "-100vw",
+      opacity: 0,
 
       transition: {
         duration: 0.5,
-        staggerChildren: 0.05,
-        staggerDirection: -1,
+        // staggerChildren: 0.05,
+        // staggerDirection: -1,
       },
     },
     exit: {
@@ -114,27 +117,102 @@ function Login(props) {
     // const data = await res.json();
   };
 
-  const variant = {
-    hidden: {
-      x: "-100vw",
-    },
-    visible: {
-      x: 0,
-      transition: { duration: 2, delay: 4 },
-    },
-    exit: {
-      x: "-100vw",
-      transition: { ease: "easeInOut", duration: 0.5 },
-    },
-  };
   const variantHone = {
     hidden: {
+      x: "0",
+      backgroundColor: "#8BA8E2",
+      transition: { duration: duration },
+    },
+    visible: {
+      // x: "20vw",
+      x: "30vw",
+      backgroundColor: "#BED8A5",
+
+      transition: { duration: duration },
+    },
+  };
+  const variantLoginForm = {
+    hidden: {
+      x: "0",
+      opacity: 1,
+      transition: { duration: duration },
+      // zIndex: -1,
+
+      applyAtStart: {
+        display: "block",
+      },
+      // applyAtEnd: {
+      //   zIndex: -1,
+      // },
+    },
+    visible: {
+      // zIndex: -1,
+
+      applyAtEnd: {
+        display: "none",
+      },
       opacity: 0,
+      x: "-3vw",
+      transition: { duration: duration },
+    },
+  };
+  const variantSignupForm = {
+    hidden: {
+      applyAtEnd: {
+        display: "none",
+      },
+      zIndex: -1,
+
+      opacity: 0,
+      x: "8vw",
+      // x: "40vw",
+
+      transition: { duration: duration },
+    },
+    visible: {
+      // x: "20vw",
+      x: "0",
+      opacity: 1,
+      transition: { duration: duration },
+
+      applyAtEnd: {
+        display: "block",
+      },
+    },
+  };
+
+  const variantInfoSignup = {
+    hidden: {
+      x: "10vw",
+      opacity: 0,
+      transition: { duration: duration },
     },
     visible: {
       opacity: 1,
-      transition: { duration: 0.5, delay: 0.5 },
+
+      transition: { duration: duration },
+      x: 0,
     },
+  };
+
+  const variantInfoLogin = {
+    hidden: {
+      x: "-10vw",
+      opacity: 0,
+      zIndex: -1,
+      transition: { duration: duration },
+    },
+    visible: {
+      opacity: 1,
+      zIndex: 1,
+
+      transition: { duration: duration },
+      x: 0,
+    },
+  };
+  const handleClick = () => {
+    console.log("hey");
+    setIsOpen(!isOpen);
   };
   const { email, password } = inputs;
   const classes = useStyles();
@@ -146,49 +224,54 @@ function Login(props) {
       animate="visible"
       exit="exit"
     >
-      <ArrowBackIcon onClick={() => props.history.goBack()} />
-      {/* <h1>Login</h1> */}
-      <FormSideBar left="0">
-        <motion.h1 variants={variantHone}>Login</motion.h1>
-      </FormSideBar>
-      <div>
-        <form
-          className={classes.root}
-          noValidate
-          autoComplete="off"
-          onSubmit={handleFormSubmit}
-        >
-          <motion.div variants={variantHone}>
-            <TextField
-              id="outlined-basic"
-              label="Email"
-              type="text"
-              name="email"
-              value={email}
-              onChange={handleChange}
-              error={error & inputValidation(email)}
-            />
+      {/* <ArrowBackIcon onClick={() => props.history.goBack()} /> */}
+      <motion.div
+        className="signup-form-index"
+        variants={variantSignupForm}
+        animate={isOpen ? "visible" : "hidden"}
+      >
+        {" "}
+        <Signup />
+      </motion.div>
+      <motion.div
+        className="login-divider"
+        variants={variantHone}
+        animate={isOpen ? "visible" : "hidden"}
+      >
+        <FormSideBar left="0">
+          <motion.div
+            className="login-title signup-info"
+            variants={variantInfoLogin}
+            animate={isOpen ? "hidden" : "visible"}
+          >
+            <h1>Welcome Back!</h1>
+            <h5>Enter your details to stay connected</h5>
+            <button onClick={handleClick}>Sign up here</button>
           </motion.div>
-
-          <motion.div variants={variantHone}>
-            <TextField
-              id="outlined-basic"
-              label="Password"
-              type="password"
-              name="password"
-              value={password}
-              onChange={handleChange}
-              error={error & inputValidation(password)}
-            />
+          <motion.div
+            className="login-title"
+            variants={variantInfoSignup}
+            animate={isOpen ? "visible" : "hidden"}
+          >
+            <h1>Hello!</h1>
+            <h5>Enter your details to start shopping!!</h5>
+            <div>
+              <button onClick={handleClick}>Login here</button>
+            </div>
           </motion.div>
+        </FormSideBar>
+      </motion.div>
 
-          <Button disabled={formValidation()} type="submit">
-            <div onClick={handleSubmitValidation}>Login</div>
-          </Button>
-        </form>
+      <motion.div
+        className="form-index"
+        variants={variantLoginForm}
+        animate={isOpen ? "visible" : "hidden"}
+      >
+        <h1>Login</h1>
+        <LoginForm />
         <GoogleLogin
           className="google-login"
-          clientId={process.env.CLIENT_ID}
+          clientId={process.env.REACT_APP_CLIENT_ID}
           buttonText="Log in with Google"
           onSuccess={handleLogin}
           onFailure={handleLogin}
@@ -196,7 +279,12 @@ function Login(props) {
           theme="light"
         />
         {props.loginFailed && <p>Incorrect password or Email</p>}
-      </div>
+      </motion.div>
+      <MoblieAction>
+        {props.loginFailed && <p>Incorrect password or Email</p>}
+        <p>Want to create an account?</p>
+        <Link to={"/signup"}> Signup</Link>
+      </MoblieAction>
     </motion.div>
   );
 }

@@ -6,20 +6,26 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "./../styles/button";
 import { withRouter } from "react-router-dom";
+import { MoblieAction } from "./../styles/login";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import GoogleLogin from "react-google-login";
 
 function Signup(props) {
   // state = { username: "", password: "" }
 
-  const [inputs, setInputs] = useState({ email: "", password: "" });
+  const [inputs, setInputs] = useState({
+    email: "",
+    password: "",
+    repeatPassword: "",
+  });
   const [error, setError] = useState(false);
 
   const useStyles = makeStyles((theme) => ({
     root: {
       "& > *": {
         margin: theme.spacing(1),
-        width: "25ch",
+        // width: "25ch",
+        width: "35ch",
       },
     },
   }));
@@ -32,6 +38,12 @@ function Signup(props) {
         valid = true;
       }
     });
+    if (passwordValidation()) {
+      valid = true;
+    }
+    if (!validateEmail(inputs.email)) {
+      valid = true;
+    }
     return valid;
   };
 
@@ -43,7 +55,6 @@ function Signup(props) {
     }
   };
   const handleSubmitValidation = () => {
-    console.log("called");
     setError(formValidation());
   };
 
@@ -52,6 +63,19 @@ function Signup(props) {
     const { email, password } = inputs;
 
     props.signup(email, password);
+  };
+
+  function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
+  const passwordValidation = () => {
+    if (inputs.password !== inputs.repeatPassword) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const handleChange = (event) => {
@@ -79,9 +103,8 @@ function Signup(props) {
     props.googleLogin(googleData);
   };
 
-  const { email, password } = inputs;
+  const { email, password, repeatPassword } = inputs;
   const classes = useStyles();
-
   return (
     <motion.div
       className="signup"
@@ -92,8 +115,8 @@ function Signup(props) {
     >
       <ArrowBackIcon onClick={() => props.history.goBack()} />
 
-      <h1>Sign Up</h1>
       {/* <p className="line-1 anim-typewriter">HELLO THERE, WELCOME</p> */}
+      <h1>Create An Account</h1>
 
       <form
         className={classes.root}
@@ -109,7 +132,10 @@ function Signup(props) {
           name="email"
           value={email}
           onChange={handleChange}
-          error={error & inputValidation(email)}
+          error={error && !validateEmail(email)}
+          helperText={
+            error && passwordValidation() ? "Please enter a valid email" : null
+          }
         />
 
         <TextField
@@ -120,7 +146,20 @@ function Signup(props) {
           name="password"
           value={password}
           onChange={handleChange}
-          error={error & inputValidation(password)}
+          error={error && inputValidation(password)}
+        />
+        <TextField
+          id="outlined-basic"
+          label="Repeat Password"
+          // variant="outlined"
+          type="password"
+          name="repeatPassword"
+          value={repeatPassword}
+          onChange={handleChange}
+          error={error && passwordValidation()}
+          helperText={
+            error && passwordValidation() ? "The password must match" : null
+          }
         />
 
         <Button disabled={formValidation()} type="submit">
@@ -131,16 +170,17 @@ function Signup(props) {
       <GoogleLogin
         className="google-login"
         clientId="687427569890-43sl05f68lh2ncs56ce50uqnrg963o48.apps.googleusercontent.com"
-        buttonText="Log in with Google"
+        // buttonText="Log in with Google"
         onSuccess={handleLogin}
         onFailure={handleLogin}
         cookiePolicy={"single_host_origin"}
         theme="light"
       />
       {props.signupFailed && <p>Email is already taken</p>}
-
-      <p>Already have account?</p>
-      <Link to={"/login"}> Login</Link>
+      <MoblieAction>
+        <p>Already have account?</p>
+        <Link to={"/login"}> Login</Link>
+      </MoblieAction>
     </motion.div>
   );
 }

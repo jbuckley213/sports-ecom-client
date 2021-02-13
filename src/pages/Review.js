@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ShoppingCart from "./ShoppingCart";
+import ReviewCartList from "./../components/ReviewCartList";
 import {
   ReviewContainer,
   Price,
@@ -92,23 +92,7 @@ function Review(props) {
       .catch((err) => console.log(err));
   };
 
-  const handleNumberDecimal = (number) => {
-    let numberDecimalSplit = number.toString().split(".");
-    if (numberDecimalSplit.length === 1) {
-      numberDecimalSplit.push("00");
-      return numberDecimalSplit.join(".");
-    }
-    if (numberDecimalSplit[1].length === 1) {
-      let oneDigitDecimal = numberDecimalSplit[1];
-      numberDecimalSplit.pop();
-      numberDecimalSplit.push(`${oneDigitDecimal}0`);
-      return numberDecimalSplit.join(".");
-    } else {
-      return number;
-    }
-  };
-
-  console.log(user);
+  console.log("price total", totalPrice);
   return (
     <motion.div
       variants={containerVariant}
@@ -146,39 +130,12 @@ function Review(props) {
               Pay with <span>STRIPE</span>
             </button>
           </PayNow>
-          <ReviewProductContainer>
-            <ProductHeader>
-              <p>Item</p>
-              <p>Title</p>
-              <p>Quantity</p>
-              <p>Price</p>
-              <p>Total</p>
-            </ProductHeader>
-            {user.cart &&
-              user.cart.map((item) => {
-                return (
-                  <ReviewCart
-                    handleNumberDecimal={handleNumberDecimal}
-                    product={item.product}
-                    quantity={item.quantity}
-                  />
-                );
-              })}
-            <Price>
-              <div className="totals">
-                <div>
-                  <h5>Sub Total:</h5>{" "}
-                  <p>&euro;{handleNumberDecimal(totalPrice - 10)}</p>
-                </div>
-                <div>
-                  <h5>Shipping:</h5> <p>&euro;10.00</p>
-                </div>
-                <div className="final-total">
-                  <h5>Total:</h5> <p>&euro;{handleNumberDecimal(totalPrice)}</p>
-                </div>
-              </div>
-            </Price>
-          </ReviewProductContainer>
+
+          <ReviewCartList
+            width="340px"
+            cart={user.cart}
+            totalPrice={totalPrice}
+          />
         </div>
       </div>
     </motion.div>

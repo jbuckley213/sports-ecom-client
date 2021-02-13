@@ -104,19 +104,24 @@ export const PayNow = styled.div`
 export const inputContainers = styled.div``;
 
 export const FormSideBar = styled.div`
-  @media (min-width: 1027px) {
-    width: 250px;
-    height: 400px;
-    background-color: rgb(176, 227, 232, 0.8);
+  display: none;
+  @media (min-width: 1023px) {
+    display: block;
+    /* width: 250px;
+    height: 400px; */
+    width: 400px;
+    height: 600px;
+    /* background-color: rgb(190, 216, 165, 1); */
     position: relative;
     left: ${(props) => props.left};
+    z-index: 3;
   }
   h1 {
     color: #444;
-    @media (min-width: 1027px) {
-      color: white;
+    @media (min-width: 1023px) {
+      color: #eef2f7;
       text-align: center;
-      margin: 40px 0;
+      /* margin: 40px 0; */
     }
   }
 `;

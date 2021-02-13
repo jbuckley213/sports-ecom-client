@@ -20,24 +20,31 @@ export const DetailsImageContainer = styled.div`
     
   width: 340px;
   height: 340px;
+  transition: all 0.5s;
+  
   
     @media (min-width: 720px) {
-        width: 40%;
-  height: 50%;
+       width: 40%;
+  height: 50%; 
+  
   position: relative;
     left: 50px;
-    z-index: -1;
+    z-index: -1; 
     top: 70px;
     background: linear-gradient(
     rgba(${(props) => props.color}, 0.4),
     rgba(${(props) => props.color}, 0.8)
   ); 
+
         }
 
   img{
     width:100%;
     height:auto;
+    
     mix-blend-mode: multiply; 
+  
+
 
   `}
 `;
@@ -57,6 +64,7 @@ export const TestDiv = styled.div`
 export const InfoContainer = styled.div`
   width: 340px;
   height: 340px;
+
   @media (min-width: 1023px) {
     width: 50%;
     height: 50%;

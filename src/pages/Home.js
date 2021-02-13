@@ -30,11 +30,11 @@ function Home(props) {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5 },
+      transition: { duration: 0.8 },
     },
     exit: {
       x: "-100vw",
-      transition: { ease: "easeInOut", duration: 0.5 },
+      transition: { ease: "easeInOut", duration: 0.8 },
     },
   };
   const detailsVariant = {

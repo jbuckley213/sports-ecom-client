@@ -131,7 +131,7 @@ function ProductDetailsPage(props) {
 
   const cartOrLogin = () => {
     return props.user === null ? (
-      <Link to="/signup">
+      <Link to="/login">
         <Button>Add To Cart</Button>
       </Link>
     ) : (
@@ -206,7 +206,7 @@ function ProductDetailsPage(props) {
                     {handleNumberDecimal(product.oldPrice)}
                   </h5>
                 )}
-                <h4>
+                <h4 variants={imageVariant}>
                   {" "}
                   &euro;
                   {product.price &&

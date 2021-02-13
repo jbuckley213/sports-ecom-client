@@ -4,9 +4,13 @@ import { withRouter } from "react-router-dom";
 import { PayPalContainer } from "./../styles/product-review";
 
 const width = window.pageXOffset;
-const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 
 function PayPal(props) {
+  const PayPalButton = window.paypal.Buttons.driver("react", {
+    React,
+    ReactDOM,
+  });
+
   const createOrder = (data, actions) => {
     return actions.order
       .create({
